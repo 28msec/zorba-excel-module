@@ -1,6 +1,0 @@
-C:/Users/juanza/Zorba/modules/excel/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/juanza/Zorba/modules/excel/build/CMakeFiles/Continuous.dir
-C:/Users/juanza/Zorba/modules/excel/build/CMakeFiles/Experimental.dir
-C:/Users/juanza/Zorba/modules/excel/build/CMakeFiles/Nightly.dir
-C:/Users/juanza/Zorba/modules/excel/build/CMakeFiles/NightlyMemoryCheck.dir
-C:/Users/juanza/Zorba/modules/excel/build/CMakeFiles/ZERO_CHECK.dir
