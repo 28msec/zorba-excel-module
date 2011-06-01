@@ -46,7 +46,7 @@ excel-err="http://www.zorba-xquery.com/modules/excel/errors";
  :    The sequence can be of any length, from 1 up.
  : @return the standard deviation, as numeric type
  : @error the errors returned by VAR function
- : @example rbkt/Queries/zorba/excel/statistical/stdev1.xq
+ : @example test/Queries/excel/statistical/stdev1.xq
 :)
 declare function excel:stdev($numbers as xs:anyAtomicType+) as xs:anyAtomicType
 {
@@ -65,7 +65,7 @@ declare function excel:stdev($numbers as xs:anyAtomicType+) as xs:anyAtomicType
  :    The sequence can be of any length, from 1 up.
  : @return the standard deviation, as numeric type
  : @error the errors returned by VARA function
- : @example rbkt/Queries/zorba/excel/statistical/stdeva1.xq
+ : @example test/Queries/excel/statistical/stdeva1.xq
 :)
 declare function excel:stdeva($numbers as xs:anyAtomicType+) as xs:anyAtomicType
 {
@@ -84,7 +84,7 @@ declare function excel:stdeva($numbers as xs:anyAtomicType+) as xs:anyAtomicType
  :    The sequence can be of any length, from 1 up.
  : @return the standard deviation, as numeric type
  : @error the errors returned by VARP function
- : @example rbkt/Queries/zorba/excel/statistical/stdevp1.xq
+ : @example test/Queries/excel/statistical/stdevp1.xq
 :)
 declare function excel:stdevp($numbers as xs:anyAtomicType+) as xs:anyAtomicType
 {
@@ -103,7 +103,7 @@ declare function excel:stdevp($numbers as xs:anyAtomicType+) as xs:anyAtomicType
  :    The sequence can be of any length, from 1 up.
  : @return the standard deviation, as numeric type
  : @error the errors returned by VARPA function
- : @example rbkt/Queries/zorba/excel/statistical/stdevpa1.xq
+ : @example test/Queries/excel/statistical/stdevpa1.xq
 :)
 declare function excel:stdevpa($numbers as xs:anyAtomicType+) as xs:anyAtomicType
 {
@@ -136,17 +136,17 @@ declare function excel:stdevpa($numbers as xs:anyAtomicType+) as xs:anyAtomicTyp
  : @return The function result, as numeric type
  : @error ** depends on the function called
  : @error XQP0021(errNum) if $function_num is not a value between 1 .. 11 or 101 .. 111
- : @example rbkt/Queries/zorba/excel/statistical/priority1/subtotal1.xq
- : @example rbkt/Queries/zorba/excel/statistical/priority1/subtotal2.xq
- : @example rbkt/Queries/zorba/excel/statistical/priority1/subtotal3.xq
- : @example rbkt/Queries/zorba/excel/statistical/priority1/subtotal4.xq
- : @example rbkt/Queries/zorba/excel/statistical/priority1/subtotal5.xq
- : @example rbkt/Queries/zorba/excel/statistical/priority1/subtotal6.xq
- : @example rbkt/Queries/zorba/excel/statistical/priority1/subtotal7.xq
- : @example rbkt/Queries/zorba/excel/statistical/priority1/subtotal8.xq
- : @example rbkt/Queries/zorba/excel/statistical/priority1/subtotal9.xq
- : @example rbkt/Queries/zorba/excel/statistical/priority1/subtotal10.xq
- : @example rbkt/Queries/zorba/excel/statistical/priority1/subtotal11.xq
+ : @example test/Queries/excel/statistical/priority1/subtotal1.xq
+ : @example test/Queries/excel/statistical/priority1/subtotal2.xq
+ : @example test/Queries/excel/statistical/priority1/subtotal3.xq
+ : @example test/Queries/excel/statistical/priority1/subtotal4.xq
+ : @example test/Queries/excel/statistical/priority1/subtotal5.xq
+ : @example test/Queries/excel/statistical/priority1/subtotal6.xq
+ : @example test/Queries/excel/statistical/priority1/subtotal7.xq
+ : @example test/Queries/excel/statistical/priority1/subtotal8.xq
+ : @example test/Queries/excel/statistical/priority1/subtotal9.xq
+ : @example test/Queries/excel/statistical/priority1/subtotal10.xq
+ : @example test/Queries/excel/statistical/priority1/subtotal11.xq
 :)
 declare function excel:subtotal($function_num as xs:integer, $numbers as xs:anyAtomicType*) as xs:anyAtomicType
 {

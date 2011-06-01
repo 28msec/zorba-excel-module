@@ -81,12 +81,12 @@ declare function excel:cast-as-numeric($number as xs:anyAtomicType) as xs:anyAto
  : @param $arg The parameter can be a number, string, boolean value.
  : @return The abs value as a numeric type.
  : @error XQP0021(errValue) if arg cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/abs1.xq
- : @example rbkt/Queries/zorba/excel/math/abs2.xq
- : @example rbkt/Queries/zorba/excel/math/abs3.xq
- : @example rbkt/Queries/zorba/excel/math/abs4.xq
- : @example rbkt/Queries/zorba/excel/math/abs5.xq
- : @example rbkt/Queries/zorba/excel/math/abs6.xq
+ : @example test/Queries/excel/math/abs1.xq
+ : @example test/Queries/excel/math/abs2.xq
+ : @example test/Queries/excel/math/abs3.xq
+ : @example test/Queries/excel/math/abs4.xq
+ : @example test/Queries/excel/math/abs5.xq
+ : @example test/Queries/excel/math/abs6.xq
  :)
 declare function excel:abs($arg as xs:anyAtomicType) as xs:anyAtomicType
 {
@@ -105,13 +105,13 @@ declare function excel:abs($arg as xs:anyAtomicType) as xs:anyAtomicType
  : @return The rounded value.
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
  : @error XQP0021(errNum) if significance is zero or it doesn't have the same sign as number.
- : @example rbkt/Queries/zorba/excel/math/ceiling1.xq
- : @example rbkt/Queries/zorba/excel/math/ceiling2.xq
- : @example rbkt/Queries/zorba/excel/math/ceiling3.xq
- : @example rbkt/Queries/zorba/excel/math/ceiling4.xq
- : @example rbkt/Queries/zorba/excel/math/ceiling5.xq
- : @example rbkt/Queries/zorba/excel/math/ceiling6.xq
- : @example rbkt/Queries/zorba/excel/math/ceiling7.xq
+ : @example test/Queries/excel/math/ceiling1.xq
+ : @example test/Queries/excel/math/ceiling2.xq
+ : @example test/Queries/excel/math/ceiling3.xq
+ : @example test/Queries/excel/math/ceiling4.xq
+ : @example test/Queries/excel/math/ceiling5.xq
+ : @example test/Queries/excel/math/ceiling6.xq
+ : @example test/Queries/excel/math/ceiling7.xq
  :)
 declare function excel:ceiling(
   $number        as xs:anyAtomicType,
@@ -136,12 +136,12 @@ declare function excel:ceiling(
  : @param $number The value to round.
  : @return The rounded value casted as numeric type.
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/even1.xq
- : @example rbkt/Queries/zorba/excel/math/even2.xq
- : @example rbkt/Queries/zorba/excel/math/even3.xq
- : @example rbkt/Queries/zorba/excel/math/even4.xq
- : @example rbkt/Queries/zorba/excel/math/even5.xq
- : @example rbkt/Queries/zorba/excel/math/even6.xq
+ : @example test/Queries/excel/math/even1.xq
+ : @example test/Queries/excel/math/even2.xq
+ : @example test/Queries/excel/math/even3.xq
+ : @example test/Queries/excel/math/even4.xq
+ : @example test/Queries/excel/math/even5.xq
+ : @example test/Queries/excel/math/even6.xq
  :)
 declare function excel:even($number as xs:anyAtomicType) as xs:anyAtomicType
 {
@@ -185,11 +185,11 @@ declare %private function excel:fact-integer($intnum as xs:integer) as xs:intege
  :        If number is not an integer, it is truncated.
  : @return Returns the factorial of a number. The factorial of a number is equal to 1*2*3*...* number.
  : @error XQP0021(errNum) if the number is smaller than zero
- : @example rbkt/Queries/zorba/excel/math/fact1.xq
- : @example rbkt/Queries/zorba/excel/math/fact2.xq
- : @example rbkt/Queries/zorba/excel/math/fact3.xq
- : @example rbkt/Queries/zorba/excel/math/fact4.xq
- : @example rbkt/Queries/zorba/excel/math/fact5.xq
+ : @example test/Queries/excel/math/fact1.xq
+ : @example test/Queries/excel/math/fact2.xq
+ : @example test/Queries/excel/math/fact3.xq
+ : @example test/Queries/excel/math/fact4.xq
+ : @example test/Queries/excel/math/fact5.xq
 :)
 declare function excel:fact($number as xs:anyAtomicType) as xs:integer
 {
@@ -213,11 +213,11 @@ declare function excel:fact($number as xs:anyAtomicType) as xs:integer
  : @return The rounded value as numeric type.
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
  : @error XQP0021(errNum) if significance is zero or it doesn't have the same sign as number.
- : @example rbkt/Queries/zorba/excel/math/floor1.xq
- : @example rbkt/Queries/zorba/excel/math/floor2.xq
- : @example rbkt/Queries/zorba/excel/math/floor3.xq
- : @example rbkt/Queries/zorba/excel/math/floor4.xq
- : @example rbkt/Queries/zorba/excel/math/floor5.xq
+ : @example test/Queries/excel/math/floor1.xq
+ : @example test/Queries/excel/math/floor2.xq
+ : @example test/Queries/excel/math/floor3.xq
+ : @example test/Queries/excel/math/floor4.xq
+ : @example test/Queries/excel/math/floor5.xq
 :)
 declare function excel:floor(
   $number as xs:anyAtomicType,
@@ -242,10 +242,10 @@ declare function excel:floor(
  : @param $number The value to be rounded.
  : @return The rounded integer.
  : @error XQP0021(errValue) if parameter cannot be casted to numeric type
- : @example rbkt/Queries/zorba/excel/math/int1.xq
- : @example rbkt/Queries/zorba/excel/math/int2.xq
- : @example rbkt/Queries/zorba/excel/math/int3.xq
- : @example rbkt/Queries/zorba/excel/math/int4.xq
+ : @example test/Queries/excel/math/int1.xq
+ : @example test/Queries/excel/math/int2.xq
+ : @example test/Queries/excel/math/int3.xq
+ : @example test/Queries/excel/math/int4.xq
 :)
 declare function excel:int($number as xs:anyAtomicType) as xs:integer
 {
@@ -263,10 +263,10 @@ declare function excel:int($number as xs:anyAtomicType) as xs:integer
  : @return The remainder from division as numeric type.
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
  : @error XQP0021(errDiv0) if divisor is zero after casting to numeric.
- : @example rbkt/Queries/zorba/excel/math/mod1.xq
- : @example rbkt/Queries/zorba/excel/math/mod2.xq
- : @example rbkt/Queries/zorba/excel/math/mod3.xq
- : @example rbkt/Queries/zorba/excel/math/mod4.xq
+ : @example test/Queries/excel/math/mod1.xq
+ : @example test/Queries/excel/math/mod2.xq
+ : @example test/Queries/excel/math/mod3.xq
+ : @example test/Queries/excel/math/mod4.xq
  :)
 declare function excel:mod(
   $number as xs:anyAtomicType,
@@ -292,12 +292,12 @@ declare function excel:mod(
  : @param $number The value to round.
  : @return The odd integer.
  : @error XQP0021(errValue) if parameter cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/odd1.xq
- : @example rbkt/Queries/zorba/excel/math/odd2.xq
- : @example rbkt/Queries/zorba/excel/math/odd3.xq
- : @example rbkt/Queries/zorba/excel/math/odd4.xq
- : @example rbkt/Queries/zorba/excel/math/odd5.xq
- : @example rbkt/Queries/zorba/excel/math/odd6.xq
+ : @example test/Queries/excel/math/odd1.xq
+ : @example test/Queries/excel/math/odd2.xq
+ : @example test/Queries/excel/math/odd3.xq
+ : @example test/Queries/excel/math/odd4.xq
+ : @example test/Queries/excel/math/odd5.xq
+ : @example test/Queries/excel/math/odd6.xq
  :)
 declare function excel:odd($number as xs:anyAtomicType) as xs:integer
 {
@@ -337,10 +337,10 @@ declare function excel:pi() as xs:decimal
  : @return The result as numeric type.
  : @error XQP0021(errValue) if parameter cannot be casted to numeric type.
  : @error XQP0021(errValue) if power is smaller than zero.
- : @example rbkt/Queries/zorba/excel/math/power1.xq
- : @example rbkt/Queries/zorba/excel/math/power3.xq
- : @example rbkt/Queries/zorba/excel/math/power4.xq
- : @example rbkt/Queries/zorba/excel/math/power5.xq
+ : @example test/Queries/excel/math/power1.xq
+ : @example test/Queries/excel/math/power3.xq
+ : @example test/Queries/excel/math/power4.xq
+ : @example test/Queries/excel/math/power5.xq
  :)
 declare function excel:power(
   $number as xs:anyAtomicType,
@@ -387,11 +387,11 @@ declare %private function excel:product-internal($numbers as xs:anyAtomicType*) 
  :        The sequence can be of any length.
  : @return The multiplication result as numeric type.
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/product1.xq
- : @example rbkt/Queries/zorba/excel/math/product2.xq
- : @example rbkt/Queries/zorba/excel/math/product3.xq
- : @example rbkt/Queries/zorba/excel/math/product4.xq
- : @example rbkt/Queries/zorba/excel/math/product5.xq
+ : @example test/Queries/excel/math/product1.xq
+ : @example test/Queries/excel/math/product2.xq
+ : @example test/Queries/excel/math/product3.xq
+ : @example test/Queries/excel/math/product4.xq
+ : @example test/Queries/excel/math/product5.xq
  :)
 declare function excel:product($numbers as xs:anyAtomicType*) as xs:anyAtomicType
 {
@@ -410,10 +410,10 @@ declare function excel:product($numbers as xs:anyAtomicType*) as xs:anyAtomicTyp
  : @return The result value as numeric type.
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
  : @error XQP0021(div0) if denominator casted as numeric type has value zero.
- : @example rbkt/Queries/zorba/excel/math/quotient1.xq
- : @example rbkt/Queries/zorba/excel/math/quotient2.xq
- : @example rbkt/Queries/zorba/excel/math/quotient3.xq
- : @example rbkt/Queries/zorba/excel/math/quotient4.xq
+ : @example test/Queries/excel/math/quotient1.xq
+ : @example test/Queries/excel/math/quotient2.xq
+ : @example test/Queries/excel/math/quotient3.xq
+ : @example test/Queries/excel/math/quotient4.xq
  :)
 declare function excel:quotient(
   $numerator   as xs:anyAtomicType,
@@ -441,10 +441,10 @@ declare function excel:quotient(
  : @param $precision The number of decimal places to keep.
  : @return The rounded number as numeric type.
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/round1.xq
- : @example rbkt/Queries/zorba/excel/math/round2.xq
- : @example rbkt/Queries/zorba/excel/math/round3.xq
- : @example rbkt/Queries/zorba/excel/math/round4.xq
+ : @example test/Queries/excel/math/round1.xq
+ : @example test/Queries/excel/math/round2.xq
+ : @example test/Queries/excel/math/round3.xq
+ : @example test/Queries/excel/math/round4.xq
  :)
 declare function excel:round(
   $number as xs:anyAtomicType,
@@ -480,11 +480,11 @@ declare function excel:round(
  : @param $precision The number of decimal places to keep.
  : @return the truncated number toward zero, as numeric type.
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/rounddown1.xq
- : @example rbkt/Queries/zorba/excel/math/rounddown2.xq
- : @example rbkt/Queries/zorba/excel/math/rounddown3.xq
- : @example rbkt/Queries/zorba/excel/math/rounddown4.xq
- : @example rbkt/Queries/zorba/excel/math/rounddown5.xq
+ : @example test/Queries/excel/math/rounddown1.xq
+ : @example test/Queries/excel/math/rounddown2.xq
+ : @example test/Queries/excel/math/rounddown3.xq
+ : @example test/Queries/excel/math/rounddown4.xq
+ : @example test/Queries/excel/math/rounddown5.xq
  :)
 declare function excel:rounddown(
   $number     as xs:anyAtomicType,
@@ -520,11 +520,11 @@ declare function excel:rounddown(
  : @param $precision The number of decimal places to keep.
  : @return The truncated number away from zero, as numeric type.
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/roundup1.xq
- : @example rbkt/Queries/zorba/excel/math/roundup2.xq
- : @example rbkt/Queries/zorba/excel/math/roundup3.xq
- : @example rbkt/Queries/zorba/excel/math/roundup4.xq
- : @example rbkt/Queries/zorba/excel/math/roundup5.xq
+ : @example test/Queries/excel/math/roundup1.xq
+ : @example test/Queries/excel/math/roundup2.xq
+ : @example test/Queries/excel/math/roundup3.xq
+ : @example test/Queries/excel/math/roundup4.xq
+ : @example test/Queries/excel/math/roundup5.xq
  :)
 declare function excel:roundup(
   $number     as xs:anyAtomicType,
@@ -557,9 +557,9 @@ declare function excel:roundup(
  : @param $number The argument castable to numeric type.
  : @return The sign as (-1, 0, 1).
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/sign1.xq
- : @example rbkt/Queries/zorba/excel/math/sign2.xq
- : @example rbkt/Queries/zorba/excel/math/sign3.xq
+ : @example test/Queries/excel/math/sign1.xq
+ : @example test/Queries/excel/math/sign2.xq
+ : @example test/Queries/excel/math/sign3.xq
  :)
 declare function excel:sign($number as xs:anyAtomicType) as xs:integer
 {
@@ -581,9 +581,9 @@ declare function excel:sign($number as xs:anyAtomicType) as xs:integer
  :        The sequence can be of any length.
  : @return The sum as numeric type.
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/sum1.xq
- : @example rbkt/Queries/zorba/excel/math/sum2.xq
- : @example rbkt/Queries/zorba/excel/math/sum3.xq
+ : @example test/Queries/excel/math/sum1.xq
+ : @example test/Queries/excel/math/sum2.xq
+ : @example test/Queries/excel/math/sum3.xq
  :)
 declare function excel:sum($numbers as xs:anyAtomicType*) as xs:anyAtomicType
 {
@@ -602,8 +602,8 @@ declare function excel:sum($numbers as xs:anyAtomicType*) as xs:anyAtomicType
  : @param $number The argument castable to numeric type.
  : @return The integer value.
  : @error XQP0021(errValue) if parameter cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/trunc1.xq
- : @example rbkt/Queries/zorba/excel/math/trunc2.xq
+ : @example test/Queries/excel/math/trunc1.xq
+ : @example test/Queries/excel/math/trunc2.xq
  :)
 declare function excel:trunc($number as xs:anyAtomicType ) as xs:integer
 {
@@ -619,7 +619,7 @@ declare function excel:trunc($number as xs:anyAtomicType ) as xs:integer
  : @param $precision The number of decimal places to keep .
  : @return The integer value.
  : @error XQP0021(errValue) if parameter cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/trunc3.xq
+ : @example test/Queries/excel/math/trunc3.xq
  :)
 declare function excel:trunc(
   $number as xs:anyAtomicType,
@@ -669,8 +669,8 @@ declare function excel:degrees($radian as xs:double) as xs:integer
  : @param $number The positive integer value.
  : @return The result as integer.
  : @error XQP0021(errNum) if the number is negative.
- : @example rbkt/Queries/zorba/excel/math/priority1/factdouble1.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/factdouble2.xq
+ : @example test/Queries/excel/math/priority1/factdouble1.xq
+ : @example test/Queries/excel/math/priority1/factdouble2.xq
  :)
 declare function excel:factdouble($number as xs:integer) as xs:integer
 {
@@ -770,14 +770,14 @@ declare %private function excel:iterate-all-gcd(
  : @param $numbers The sequence of positive integers.
  : @return The GCD as integer.
  : @error XQP0021(errNum) if any number is smaller than zero.
- : @example rbkt/Queries/zorba/excel/math/priority1/gcd1.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/gcd2.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/gcd3.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/gcd4.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/gcd5.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/gcd6.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/gcd7.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/gcd8.xq
+ : @example test/Queries/excel/math/priority1/gcd1.xq
+ : @example test/Queries/excel/math/priority1/gcd2.xq
+ : @example test/Queries/excel/math/priority1/gcd3.xq
+ : @example test/Queries/excel/math/priority1/gcd4.xq
+ : @example test/Queries/excel/math/priority1/gcd5.xq
+ : @example test/Queries/excel/math/priority1/gcd6.xq
+ : @example test/Queries/excel/math/priority1/gcd7.xq
+ : @example test/Queries/excel/math/priority1/gcd8.xq
  :)
 declare function excel:gcd($numbers as xs:integer+) as xs:integer
 {
@@ -803,11 +803,11 @@ declare function excel:gcd($numbers as xs:integer+) as xs:integer
  : @param $numbers The sequence of one or more positive integers.
  : @return The LCM as integer.
  : @error XQP0021(errNum) if any number is smaller than zero.
- : @example rbkt/Queries/zorba/excel/math/priority1/lcm1.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/lcm2.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/lcm3.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/lcm4.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/lcm5.xq
+ : @example test/Queries/excel/math/priority1/lcm1.xq
+ : @example test/Queries/excel/math/priority1/lcm2.xq
+ : @example test/Queries/excel/math/priority1/lcm3.xq
+ : @example test/Queries/excel/math/priority1/lcm4.xq
+ : @example test/Queries/excel/math/priority1/lcm5.xq
  :)
 declare function excel:lcm($numbers as xs:integer+) as xs:integer
 {
@@ -837,9 +837,9 @@ declare function excel:lcm($numbers as xs:integer+) as xs:integer
  : @param $multiple The multiple to which you want to round number.
  : @return The rounded number up to the desired multiple.
  : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @example rbkt/Queries/zorba/excel/math/priority1/mround1.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/mround2.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/mround3.xq
+ : @example test/Queries/excel/math/priority1/mround1.xq
+ : @example test/Queries/excel/math/priority1/mround2.xq
+ : @example test/Queries/excel/math/priority1/mround3.xq
  :)
 declare function excel:mround(
   $number   as xs:anyAtomicType,
@@ -866,9 +866,9 @@ declare function excel:mround(
  : @see http://office.microsoft.com/en-us/excel/HP052092281033.aspx
  : @param $degree An angle in degrees that you want to convert.
  : @return The value in radians.
- : @example rbkt/Queries/zorba/excel/math/priority1/radians1.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/radians2.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/radians3.xq
+ : @example test/Queries/excel/math/priority1/radians1.xq
+ : @example test/Queries/excel/math/priority1/radians2.xq
+ : @example test/Queries/excel/math/priority1/radians3.xq
  :)
 declare function excel:radians($degree as xs:integer) as xs:decimal
 {
@@ -886,9 +886,9 @@ declare function excel:radians($degree as xs:integer) as xs:decimal
  : @param $number A positive integer.
  : @return The roman string representation.
  : @error XQP0021(errNum) if the input integer is negative 
- : @example rbkt/Queries/zorba/excel/math/priority1/roman1.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/roman2.xq
- : @example rbkt/Queries/zorba/excel/math/priority1/roman3.xq
+ : @example test/Queries/excel/math/priority1/roman1.xq
+ : @example test/Queries/excel/math/priority1/roman2.xq
+ : @example test/Queries/excel/math/priority1/roman3.xq
  :)
 declare function excel:roman($number as xs:integer) as xs:string
 {
