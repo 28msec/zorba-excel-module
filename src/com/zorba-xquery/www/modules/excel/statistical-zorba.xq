@@ -33,6 +33,10 @@ excel-statistical="http://www.zorba-xquery.com/modules/excel/statistical";
 import module namespace
 excel-err="http://www.zorba-xquery.com/modules/excel/errors";
 
+(:~
+ : W3C Math namespace URI.
+:)
+declare namespace math="http://www.w3.org/2005/xpath-functions/math";
 
 (:~
  : Estimates standard deviation based on a sample. 
