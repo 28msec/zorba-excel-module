@@ -23,6 +23,7 @@
  : @see <a href="http://office.microsoft.com/en-us/excel/CH062528321033.aspx"
  : target="_blank">Excel Documentation: Text Functions</a>
  :
+ : @project excel
  :)
 module namespace  excel-text = "http://www.zorba-xquery.com/modules/excel/text" ;
 

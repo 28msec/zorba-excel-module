@@ -22,6 +22,7 @@
  :
  : @spec XQuery Specification: January 2007
  : @author Daniel Turcanu
+ : @project excel
  :
  :)
 module namespace  excel = "http://www.zorba-xquery.com/modules/excel/lookup" ;

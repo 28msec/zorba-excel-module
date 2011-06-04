@@ -23,6 +23,7 @@
  :
  : @spec XQuery Specification: January 2007
  : @author Sorin Nasoi
+ : @project excel
  :
  :)
 module namespace  excel-datetime = "http://www.zorba-xquery.com/modules/excel/datetime" ;

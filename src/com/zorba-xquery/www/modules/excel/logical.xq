@@ -22,6 +22,7 @@
  :
  : @see <a href="http://office.microsoft.com/en-us/excel/CH062528271033.aspx"
  : target="_blank">Excel Documentation: Logical Functions</a>
+ : @project excel
  :
  :)
 (:  for False,Not and True use fn:false(), fn:not(), fn:true() :)
