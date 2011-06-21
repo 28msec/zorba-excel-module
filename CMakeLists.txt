@@ -25,3 +25,12 @@ INCLUDE ("${Zorba_USE_FILE}")
 
 ADD_TEST_DIRECTORY("${PROJECT_SOURCE_DIR}/test")
 ADD_SUBDIRECTORY("src")
+
+IF(NOT ZORBA_WITH_BIG_INTEGER)
+  # These tests fail due to integer overflow.
+  EXPECTED_FAILURE(zorba_excel_module/excel/math/sumproduct28.xq 0)
+  EXPECTED_FAILURE(zorba_excel_module/excel/math/sumproduct29.xq 0)
+  EXPECTED_FAILURE(zorba_excel_module/excel/math/sumproduct30.xq 0)
+ENDIF(NOT ZORBA_WITH_BIG_INTEGER)
+
+# vim:set et sw=2 ts=2:
