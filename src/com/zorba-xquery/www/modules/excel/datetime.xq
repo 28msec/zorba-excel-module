@@ -38,6 +38,9 @@ import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/err
  :)
 import module namespace excel-text = "http://www.zorba-xquery.com/modules/excel/text";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "1.0";
+
 (:~
  : The day of the week, from a date.
  : 

@@ -36,6 +36,9 @@ import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/err
  :)
 import module namespace excel-math="http://www.zorba-xquery.com/modules/excel/math";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "1.0";
+
 (:~
  : Uses index_num to return a value from the sequence of value arguments. 
  :

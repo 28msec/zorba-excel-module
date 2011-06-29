@@ -34,6 +34,9 @@ module namespace  excel-logical = "http://www.zorba-xquery.com/modules/excel/log
  :)
 import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/errors";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "1.0";
+
 (:~
  : Returns TRUE if all its arguments are TRUE; FALSE if one or more arguments are FALSE.
  :

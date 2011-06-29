@@ -42,6 +42,9 @@ import module namespace excel-text="http://www.zorba-xquery.com/modules/excel/te
  :)
 import module namespace excel-math="http://www.zorba-xquery.com/modules/excel/math";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "1.0";
+
 (:~
  : Tests if a string is a hexadecimal representation of a number.
  :

@@ -37,6 +37,9 @@ import module namespace excel-math="http://www.zorba-xquery.com/modules/excel/ma
  :)
 import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/errors";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "1.0";
+
 (:~
  : Function for average function.
  : This function should not be used outside this module.

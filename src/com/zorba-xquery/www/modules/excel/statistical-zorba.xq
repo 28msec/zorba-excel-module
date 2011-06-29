@@ -39,6 +39,10 @@ excel-err="http://www.zorba-xquery.com/modules/excel/errors";
 :)
 declare namespace math="http://www.w3.org/2005/xpath-functions/math";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "1.0";
+
+
 (:~
  : Estimates standard deviation based on a sample. 
  : The standard deviation is a measure of how widely values are dispersed 

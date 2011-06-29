@@ -33,6 +33,9 @@ module namespace  excel = "http://www.zorba-xquery.com/modules/excel/math" ;
  :)
 import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/errors";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "1.0";
+
 (:~
  : Checks if the xs:anyAtomicType argument is actually a numeric type
  : or can be converted to numeric.

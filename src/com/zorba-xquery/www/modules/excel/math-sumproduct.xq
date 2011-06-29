@@ -35,6 +35,9 @@ module namespace  excel = "http://www.zorba-xquery.com/modules/excel/math-sumpro
 :)
 import module namespace excel-math = "http://www.zorba-xquery.com/modules/excel/math";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "1.0";
+
 
 (:~
  : Sums the values in the sequence.
