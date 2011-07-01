@@ -22,3 +22,4 @@ DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/excel/math-sumproduct"
 DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/excel/math" 1.0 "math.xq")
 DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/excel/statistical-zorba" 1.0 "statistical-zorba.xq")
 DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/excel/statistical" 1.0 "statistical.xq")
+DECLARE_ZORBA_MODULE("http://www.zorba-xquery.com/modules/excel/text" 1.0 "text.xq")
