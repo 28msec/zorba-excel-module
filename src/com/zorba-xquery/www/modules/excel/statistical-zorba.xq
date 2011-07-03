@@ -140,7 +140,7 @@ declare function excel:stdevpa($numbers as xs:anyAtomicType+) as xs:anyAtomicTyp
  :       <dt>11 or 111</dt> <dd> VARP</dd></dl>
  :       
  :       In this implementation there is no difference between x and 10x.<br/>
- : @param %numbers the sequence of numbers or values castable to numeric.
+ : @param $numbers the sequence of numbers or values castable to numeric.
  :     The sequence can be of any length.
  : @return The function result, as numeric type
  : @error ** depends on the function called
