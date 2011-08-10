@@ -33,8 +33,6 @@ IF(NOT ZORBA_WITH_BIG_INTEGER)
   EXPECTED_FAILURE(zorba_excel_module/excel/math/sumproduct30.xq 0)
 ENDIF(NOT ZORBA_WITH_BIG_INTEGER)
 
-SETUP_EXTERNAL_MODULE()
-
 DONE_DECLARING_ZORBA_URIS()
 
 # vim:set et sw=2 ts=2:
