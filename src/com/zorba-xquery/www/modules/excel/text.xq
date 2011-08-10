@@ -39,6 +39,9 @@ import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/err
  :)
 import module namespace excel-math="http://www.zorba-xquery.com/modules/excel/math";
 
+declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare option ver:module-version "1.0";
+
 (:~
  : Returns the union of the values in two sequences in an implementation-defined order. It removes duplicates.
  :
