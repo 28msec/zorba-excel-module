@@ -30,10 +30,7 @@ xquery version "3.0";
  :)
 module namespace  excel-datetime = "http://www.zorba-xquery.com/modules/excel/datetime" ;
 
-(:~
- : Use excel-err module functions for throwing errors.
- :)
-import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
 
 (:~
  : Import excel-text module functions.
@@ -315,7 +312,7 @@ declare function excel-datetime:weekday
  : @see http://office.microsoft.com/en-us/excel/HP052093361033.aspx
  : @param $date the date.
  : @param $return_type 1 for Numbers 1 (Sunday) through 7 (Saturday). 2 for Numbers 1 (Monday) through 7 (Sunday). 3 for Numbers 0 (Monday) through 6 (Sunday).
- : @error   XQP0021(errValue) if $return_type is outside the range [1,3].
+ : @error excel-err:Value if $return_type is outside the range [1,3].
  : @return The day of the week corresponding to a $date depending on $return_type.
  :) 
 declare function excel-datetime:weekday
@@ -331,7 +328,7 @@ declare function excel-datetime:weekday
     if(excel-datetime:day-of-week($date) eq 0) then 6
     else excel-datetime:day-of-week($date) - 1
   else
-    fn:error($excel-err:errValue, "Provided number must be in range [1,3]", $return_type)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided number must be in range [1,3]", $return_type)
 };
 
 (:~

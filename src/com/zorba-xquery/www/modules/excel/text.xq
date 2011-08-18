@@ -29,10 +29,7 @@ xquery version "3.0";
  :)
 module namespace  excel-text = "http://www.zorba-xquery.com/modules/excel/text" ;
 
-(:~
- : Use excel-err module functions for throwing errors.
- :)
-import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
 
 (:~
  : Import excel-math module functions.
@@ -120,7 +117,7 @@ declare %private function excel-text:pad-string-to-length
  : @param   $toPad the value to be padded.
  : @param   $padChar the character used for padding.
  : @param   $length the desired length.
- : @error   XQP0021(errValue) if the length of the $toPad is greater than the desired length.
+ : @error   excel-err:Value if the length of the $toPad is greater than the desired length.
  : @return  $toPad appended with enough repetitions of $padChar to make its length $length, the characters are added before the string.
  :)
 declare function excel-text:pad-integer-to-length
@@ -129,7 +126,7 @@ declare function excel-text:pad-integer-to-length
     $length     as xs:integer) as xs:string {
 
   if ($length < fn:string-length(fn:string($toPad)))
-    then fn:error($excel-err:errValue, "Number can not ne padded to the desired length", $length) 
+    then fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Number can not ne padded to the desired length", $length) 
   else
     excel-text:reverse-string(excel-text:pad-string-to-length(
     excel-text:reverse-string(fn:string($toPad)),fn:substring($padChar, 1, 1),$length))  
@@ -243,7 +240,7 @@ declare function excel-text:asc
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052090091033.aspx
  : @param   $number the codepoint.
- : @error   XQP0021(errValue) provided $number must be in range [1,255].
+ : @error   excel-err:Value provided $number must be in range [1,255].
  : @return  the character specified by a certain codepoint.
 Zorba uses UTF-8 encoding so the actual codepoint range is between [1,1114111]
  :)
@@ -253,7 +250,7 @@ Zorba uses UTF-8 encoding so the actual codepoint range is between [1,1114111]
   if( (1 <= $number) and ($number <= 255)) then
     fn:codepoints-to-string($number)
   else 
-    fn:error($excel-err:errValue, "Provided number must be in range [1,255]", $number)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided number must be in range [1,255]", $number)
  } ;
 
 (:~
@@ -261,7 +258,7 @@ Zorba uses UTF-8 encoding so the actual codepoint range is between [1,1114111]
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052090151033.aspx
  : @param   $arg the string.
- : @error   XQP0021(errValue) Provided $arg was empty.
+ : @error   excel-err:Value Provided $arg was empty.
  : @return  A codepoint for the first character in a text string.
  :)
 declare function excel-text:code
@@ -270,7 +267,7 @@ declare function excel-text:code
   if( fn:string-length($arg) > 0 ) then 
     fn:string-to-codepoints(fn:substring($arg, 1, 1))
   else
-    fn:error($excel-err:errValue, "Provided text was empty",$arg)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided text was empty",$arg)
  } ;
 
 (:~
@@ -497,9 +494,9 @@ declare function excel-text:mid
   if ($start_num > $len) then
     xs:string('')
   else if ($start_num  < 1) then
-    fn:error($excel-err:errValue, "Provided value is less than 1", $start_num)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value is less than 1", $start_num)
   else if ($num_chars < 0) then
-    fn:error($excel-err:errValue, "Provided value is less than zero", $num_chars)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value is less than zero", $num_chars)
   else
     fn:substring($text, $start_num, $num_chars)
  };
@@ -562,8 +559,8 @@ declare function excel-text:right
  : @see     http://office.microsoft.com/en-us/excel/HP052092491033.aspx
  : @param   $find_text text you want to find.
  : @param   $within_text text in which you want to search for $find_text.
- : @error   XQP0021(errValue) the value is not greater than zero or is greater than the length of within_text.
- : @error   XQP0021(errValue) value was not found.
+ : @error   excel-err:Value the value is not greater than zero or is greater than the length of within_text.
+ : @error   excel-err:Value value was not found.
  : @return  Locate one text string within a second text string, and return the number of
  : the starting position of the first text string from the first character of the
  : second text string. <br/> The search starts at position 1, and it is not case sensitive.
@@ -584,8 +581,8 @@ declare function excel-text:search
  : @param   $find_text text you want to find.
  : @param   $within_text text in which you want to search for $find_text.
  : @param   $start_num the character number in within_text at which you want to start searching.
- : @error   XQP0021(errValue) the value is not greater than zero or is greater than the length of within_text.
- : @error   XQP0021(errValue) value was not found.
+ : @error   excel-err:Value the value is not greater than zero or is greater than the length of within_text.
+ : @error   excel-err:Value value was not found.
  : @return  Locate one text string within a second text string, and return the number of
  : the starting position of the first text string from the first character of the
  : second text string.<br/> The search starts at $start_num, and it is not case sensitive.
@@ -596,14 +593,14 @@ declare function excel-text:search
     $start_num      as xs:integer)  as xs:integer? {
 
     if(($start_num < 1) or ($start_num > fn:string-length($within_text))) then
-     fn:error($excel-err:errValue, "The value is not greater than zero or is greater than the length of within_text", $start_num)
+     fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "The value is not greater than zero or is greater than the length of within_text", $start_num)
     else
      let $source := fn:substring($within_text, $start_num)
 
      return if(fn:exists(excel-text:index-of-match-first($source, $find_text, "i"))) then
          $start_num + excel-text:index-of-match-first($source, $find_text, "i") -1
         else
-         fn:error($excel-err:errValue, "Value was not found", $find_text)
+         fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Value was not found", $find_text)
 };
 
 (:~
@@ -614,8 +611,8 @@ declare function excel-text:search
  : @see     http://office.microsoft.com/en-us/excel/HP052090891033.aspx
  : @param   $find_text text you want to find.
  : @param   $within_text text in which you want to search for $find_text.
- : @error   XQP0021(errValue) the value is not greater than zero or is greater than the length of within_text.
- : @error   XQP0021(errValue) value was not found.
+ : @error   excel-err:Value the value is not greater than zero or is greater than the length of within_text.
+ : @error   excel-err:Value value was not found.
  : @return  Locate one text string within a second text string, and return the number of the
  : starting position of the first text string from the first character of the second text string. <br/>
  : The search is case sensitive.
@@ -636,8 +633,8 @@ declare function excel-text:find
  : @param   $find_text text you want to find.
  : @param   $within_text text in which you want to search for $find_text.
  : @param   $start_num specifies the character at which to start the search.
- : @error   XQP0021(errValue) the value is not greater than zero or is greater than the length of within_text.
- : @error   XQP0021(errValue) value was not found.
+ : @error   excel-err:Value the value is not greater than zero or is greater than the length of within_text.
+ : @error   excel-err:Value value was not found.
  : @return  Locate one text string within a second text string, and return the number of the
  : starting position of the first text string from the first character of the second text string.<br/>
  : The search is case sensitive.
@@ -648,14 +645,14 @@ declare function excel-text:find
     $start_num      as xs:integer)  as xs:integer? {
 
     if(($start_num < 1) or ($start_num > fn:string-length($within_text))) then
-     fn:error($excel-err:errValue, "The value is not greater than zero or is greater than the length of within_text", $start_num)
+     fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "The value is not greater than zero or is greater than the length of within_text", $start_num)
     else
      let $source := fn:substring($within_text, $start_num)
 
      return if(fn:exists(excel-text:index-of-match-first($source, $find_text))) then
          $start_num + excel-text:index-of-match-first($source, $find_text) -1
         else
-         fn:error($excel-err:errValue, "Value was not found", $find_text)
+         fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Value was not found", $find_text)
 };
 
 (:~
@@ -745,7 +742,7 @@ declare function excel-text:t
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052093291033.aspx
  : @param   $arg the value.
- : @error   XQP0021(errValue) provided value is not a number.
+ : @error   excel-err:Value provided value is not a number.
  : @return  Converts a text string that represents a number to a number.
  :)
 declare function excel-text:value
@@ -766,5 +763,5 @@ declare function excel-text:value
       if($arg castable as xs:double) then
          xs:double($arg)
       else
-         fn:error($excel-err:errValue, "Provided value is not a number", $arg)
+         fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value is not a number", $arg)
 };

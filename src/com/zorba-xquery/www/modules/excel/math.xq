@@ -30,10 +30,7 @@ xquery version "3.0";
  :)
 module namespace  excel = "http://www.zorba-xquery.com/modules/excel/math" ;
 
-(:~
- : Use excel-err module functions for throwing errors.
- :)
-import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "1.0";
@@ -57,7 +54,7 @@ declare function excel:is-a-number($value as xs:anyAtomicType) as xs:boolean
  : 
  : @param $number The parameter can be a number, string, boolean value.
  : @return The casted value.
- : @error XQP0021(errValue) if the value cannot be casted to numeric type.
+ : @error excel-err:Value if the value cannot be casted to numeric type.
  :)
 declare function excel:cast-as-numeric($number as xs:anyAtomicType) as xs:anyAtomicType
 {
@@ -74,7 +71,7 @@ declare function excel:cast-as-numeric($number as xs:anyAtomicType) as xs:anyAto
       else if ($number castable as xs:double) then
         xs:double($number)
       else
-        fn:error($excel-err:errValue, "Provided value is not a number", $number)
+        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value is not a number", $number)
 };
 
 (: ---------------- Excel Math functions ----------------------- :)
@@ -86,7 +83,7 @@ declare function excel:cast-as-numeric($number as xs:anyAtomicType) as xs:anyAto
  : @see http://office.microsoft.com/en-us/excel/HP052089781033.aspx
  : @param $arg The parameter can be a number, string, boolean value.
  : @return The abs value as a numeric type.
- : @error XQP0021(errValue) if arg cannot be casted to numeric type.
+ : @error excel-err:Value if arg cannot be casted to numeric type.
  : @example test/Queries/excel/math/abs1.xq
  : @example test/Queries/excel/math/abs2.xq
  : @example test/Queries/excel/math/abs3.xq
@@ -109,8 +106,8 @@ declare function excel:abs($arg as xs:anyAtomicType) as xs:anyAtomicType
  : @param $number The value you want to round.
  : @param $significance The multiple to which you want to round.
  : @return The rounded value.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @error XQP0021(errNum) if significance is zero or it doesn't have the same sign as number.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
+ : @error excel-err:Num if significance is zero or it doesn't have the same sign as number.
  : @example test/Queries/excel/math/ceiling1.xq
  : @example test/Queries/excel/math/ceiling2.xq
  : @example test/Queries/excel/math/ceiling3.xq
@@ -127,11 +124,11 @@ declare function excel:ceiling(
   let $sig := excel:cast-as-numeric($significance)
   return
     if ($sig eq 0) then
-      fn:error($excel-err:errNum, "Ceiling function does not accept significance 0")
+      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Ceiling function does not accept significance 0")
     else if ($num * $sig ge 0) then
 	    fn:ceiling($num div $sig) * $sig
     else
-      fn:error($excel-err:errNum, "Ceiling function: both arguments must have the same sign")
+      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Ceiling function: both arguments must have the same sign")
 };
 
 (:~
@@ -141,7 +138,7 @@ declare function excel:ceiling(
  : @see http://office.microsoft.com/en-us/excel/HP052090801033.aspx
  : @param $number The value to round.
  : @return The rounded value casted as numeric type.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
  : @example test/Queries/excel/math/even1.xq
  : @example test/Queries/excel/math/even2.xq
  : @example test/Queries/excel/math/even3.xq
@@ -190,7 +187,7 @@ declare %private function excel:fact-integer($intnum as xs:integer) as xs:intege
  : @param $number The nonnegative number you want the factorial of.
  :        If number is not an integer, it is truncated.
  : @return Returns the factorial of a number. The factorial of a number is equal to 1*2*3*...* number.
- : @error XQP0021(errNum) if the number is smaller than zero
+ : @error excel-err:Num if the number is smaller than zero
  : @example test/Queries/excel/math/fact1.xq
  : @example test/Queries/excel/math/fact2.xq
  : @example test/Queries/excel/math/fact3.xq
@@ -204,7 +201,7 @@ declare function excel:fact($number as xs:anyAtomicType) as xs:integer
       1
     else
       if ($num lt 0) then
-        fn:error($excel-err:errNum, "Fact function does not accept numbers less than zero")
+        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Fact function does not accept numbers less than zero")
       else
         excel:fact-integer(xs:integer($num))
 };
@@ -217,8 +214,8 @@ declare function excel:fact($number as xs:anyAtomicType) as xs:integer
  : @param $number The value you want to round. The value is casted to numeric.
  : @param $significance The multiple to which you want to round.
  : @return The rounded value as numeric type.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @error XQP0021(errNum) if significance is zero or it doesn't have the same sign as number.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
+ : @error excel-err:Num if significance is zero or it doesn't have the same sign as number.
  : @example test/Queries/excel/math/floor1.xq
  : @example test/Queries/excel/math/floor2.xq
  : @example test/Queries/excel/math/floor3.xq
@@ -233,11 +230,11 @@ declare function excel:floor(
   let $sig := excel:cast-as-numeric($significance)
   return
     if ($sig eq 0) then
-      fn:error($excel-err:errNum, "Floor function does not accept significance 0")
+      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Floor function does not accept significance 0")
     else if ($num * $sig ge 0) then
       fn:floor($num div $sig) * $sig
     else
-      fn:error($excel-err:errNum, "Floor function: both arguments must have the same sign")
+      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Floor function: both arguments must have the same sign")
 };
  
 (:~
@@ -247,7 +244,7 @@ declare function excel:floor(
  : @see http://office.microsoft.com/en-us/excel/HP052091421033.aspx
  : @param $number The value to be rounded.
  : @return The rounded integer.
- : @error XQP0021(errValue) if parameter cannot be casted to numeric type
+ : @error excel-err:Value if parameter cannot be casted to numeric type
  : @example test/Queries/excel/math/int1.xq
  : @example test/Queries/excel/math/int2.xq
  : @example test/Queries/excel/math/int3.xq
@@ -267,8 +264,8 @@ declare function excel:int($number as xs:anyAtomicType) as xs:integer
  : @param $divisor The number by which you want to divide number.
  :        This cannot be zero.
  : @return The remainder from division as numeric type.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @error XQP0021(errDiv0) if divisor is zero after casting to numeric.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
+ : @error excel-err:Div0 if divisor is zero after casting to numeric.
  : @example test/Queries/excel/math/mod1.xq
  : @example test/Queries/excel/math/mod2.xq
  : @example test/Queries/excel/math/mod3.xq
@@ -281,7 +278,7 @@ declare function excel:mod(
   let $num := excel:cast-as-numeric($number)
   let $div := excel:cast-as-numeric($divisor) return
     if ($div eq 0) then
-      fn:error($excel-err:errDiv0, "Mod operator: divide by 0")
+      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Div0"), "Mod operator: divide by 0")
     else
       let $result := $num mod $div
       return
@@ -297,7 +294,7 @@ declare function excel:mod(
  : @see  http://office.microsoft.com/en-us/excel/HP052092031033.aspx
  : @param $number The value to round.
  : @return The odd integer.
- : @error XQP0021(errValue) if parameter cannot be casted to numeric type.
+ : @error excel-err:Value if parameter cannot be casted to numeric type.
  : @example test/Queries/excel/math/odd1.xq
  : @example test/Queries/excel/math/odd2.xq
  : @example test/Queries/excel/math/odd3.xq
@@ -341,8 +338,8 @@ declare function excel:pi() as xs:decimal
  : @param $number The base number.
  : @param $power The exponent as integer (cannot be floating point like in Excel).
  : @return The result as numeric type.
- : @error XQP0021(errValue) if parameter cannot be casted to numeric type.
- : @error XQP0021(errValue) if power is smaller than zero.
+ : @error excel-err:Value if parameter cannot be casted to numeric type.
+ : @error excel-err:Value if power is smaller than zero.
  : @example test/Queries/excel/math/power1.xq
  : @example test/Queries/excel/math/power3.xq
  : @example test/Queries/excel/math/power4.xq
@@ -355,7 +352,7 @@ declare function excel:power(
   let $num := excel:cast-as-numeric($number)
   return
     if ($power lt 0) then
-      fn:error($excel-err:errValue, "Power function: power must be greater or equal than zero")
+      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Power function: power must be greater or equal than zero")
     else if ($power eq 0) then
       1
     else if ($power = 1) then
@@ -373,7 +370,7 @@ declare function excel:power(
  :
  : @param $numbers The list of arguments to be casted to numeric and multiplied.
  : @return The multiplication result as numeric type.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
  :)
 declare %private function excel:product-internal($numbers as xs:anyAtomicType*) as xs:anyAtomicType
 {
@@ -392,7 +389,7 @@ declare %private function excel:product-internal($numbers as xs:anyAtomicType*) 
  : @param $numbers The sequence of arguments convertable to numeric types.
  :        The sequence can be of any length.
  : @return The multiplication result as numeric type.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
  : @example test/Queries/excel/math/product1.xq
  : @example test/Queries/excel/math/product2.xq
  : @example test/Queries/excel/math/product3.xq
@@ -414,8 +411,8 @@ declare function excel:product($numbers as xs:anyAtomicType*) as xs:anyAtomicTyp
  : @param $numerator The divident.
  : @param $denominator The divisor. It cannot be zero.
  : @return The result value as numeric type.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
- : @error XQP0021(div0) if denominator casted as numeric type has value zero.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
+ : @error excel-err:Div0 if denominator casted as numeric type has value zero.
  : @example test/Queries/excel/math/quotient1.xq
  : @example test/Queries/excel/math/quotient2.xq
  : @example test/Queries/excel/math/quotient3.xq
@@ -429,7 +426,7 @@ declare function excel:quotient(
   let $denom := excel:cast-as-numeric($denominator)
   return
     if ($denom eq 0) then
-      fn:error($excel-err:errDiv0, "Quotient function: divide by 0")
+      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Div0"), "Quotient function: divide by 0")
     else
       xs:integer($numer div $denom)
 };
@@ -446,7 +443,7 @@ declare function excel:quotient(
  : @param $number The number to round, castable to a numeric type.
  : @param $precision The number of decimal places to keep.
  : @return The rounded number as numeric type.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
  : @example test/Queries/excel/math/round1.xq
  : @example test/Queries/excel/math/round2.xq
  : @example test/Queries/excel/math/round3.xq
@@ -485,7 +482,7 @@ declare function excel:round(
  : @param $number The number to round, castable to numeric type.
  : @param $precision The number of decimal places to keep.
  : @return the truncated number toward zero, as numeric type.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
  : @example test/Queries/excel/math/rounddown1.xq
  : @example test/Queries/excel/math/rounddown2.xq
  : @example test/Queries/excel/math/rounddown3.xq
@@ -525,7 +522,7 @@ declare function excel:rounddown(
  : @param $number The number to round, castable to numeric type.
  : @param $precision The number of decimal places to keep.
  : @return The truncated number away from zero, as numeric type.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
  : @example test/Queries/excel/math/roundup1.xq
  : @example test/Queries/excel/math/roundup2.xq
  : @example test/Queries/excel/math/roundup3.xq
@@ -562,7 +559,7 @@ declare function excel:roundup(
  : @see http://office.microsoft.com/en-us/excel/HP052092551033.aspx
  : @param $number The argument castable to numeric type.
  : @return The sign as (-1, 0, 1).
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
  : @example test/Queries/excel/math/sign1.xq
  : @example test/Queries/excel/math/sign2.xq
  : @example test/Queries/excel/math/sign3.xq
@@ -586,7 +583,7 @@ declare function excel:sign($number as xs:anyAtomicType) as xs:integer
  : @param $numbers The sequence of arguments castable to numeric types.
  :        The sequence can be of any length.
  : @return The sum as numeric type.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
  : @example test/Queries/excel/math/sum1.xq
  : @example test/Queries/excel/math/sum2.xq
  : @example test/Queries/excel/math/sum3.xq
@@ -607,7 +604,7 @@ declare function excel:sum($numbers as xs:anyAtomicType*) as xs:anyAtomicType
  : @see http://office.microsoft.com/en-us/excel/HP052093241033.aspx
  : @param $number The argument castable to numeric type.
  : @return The integer value.
- : @error XQP0021(errValue) if parameter cannot be casted to numeric type.
+ : @error excel-err:Value if parameter cannot be casted to numeric type.
  : @example test/Queries/excel/math/trunc1.xq
  : @example test/Queries/excel/math/trunc2.xq
  :)
@@ -624,7 +621,7 @@ declare function excel:trunc($number as xs:anyAtomicType ) as xs:integer
  : @param $number The argument castable to numeric type.
  : @param $precision The number of decimal places to keep .
  : @return The integer value.
- : @error XQP0021(errValue) if parameter cannot be casted to numeric type.
+ : @error excel-err:Value if parameter cannot be casted to numeric type.
  : @example test/Queries/excel/math/trunc3.xq
  :)
 declare function excel:trunc(
@@ -641,7 +638,7 @@ declare function excel:trunc(
  :  
  : @param $numbers The sequence of arguments castable to numeric.
  : @return The sorted sequence as numeric types.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
  :)
 declare function excel:sort-numbers($numbers as xs:anyAtomicType*) as xs:anyAtomicType*
 {
@@ -674,14 +671,14 @@ declare function excel:degrees($radian as xs:double) as xs:integer
  : @see http://office.microsoft.com/en-us/excel/HP052090851033.aspx
  : @param $number The positive integer value.
  : @return The result as integer.
- : @error XQP0021(errNum) if the number is negative.
+ : @error excel-err:Num if the number is negative.
  : @example test/Queries/excel/math/priority1/factdouble1.xq
  : @example test/Queries/excel/math/priority1/factdouble2.xq
  :)
 declare function excel:factdouble($number as xs:integer) as xs:integer
 {
   if ($number lt 0) then
-    fn:error($excel-err:errNum, "Factdouble function: number should be greater than zero or equal")
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Factdouble function: number should be greater than zero or equal")
   else if ($number eq 1) then
     1
   else if ($number eq 2) then
@@ -775,7 +772,7 @@ declare %private function excel:iterate-all-gcd(
  : @see http://office.microsoft.com/en-us/excel/HP052091041033.aspx
  : @param $numbers The sequence of positive integers.
  : @return The GCD as integer.
- : @error XQP0021(errNum) if any number is smaller than zero.
+ : @error excel-err:Num if any number is smaller than zero.
  : @example test/Queries/excel/math/priority1/gcd1.xq
  : @example test/Queries/excel/math/priority1/gcd2.xq
  : @example test/Queries/excel/math/priority1/gcd3.xq
@@ -793,7 +790,7 @@ declare function excel:gcd($numbers as xs:integer+) as xs:integer
     let $minval := excel:min-without-zero($numbers)
     return
       if ($minval lt 0) then
-        fn:error($excel-err:errNum, "gcd function: numbers should be greater than zero or equal")
+        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "gcd function: numbers should be greater than zero or equal")
       else if ($minval eq 0) then
         0
       else 
@@ -808,7 +805,7 @@ declare function excel:gcd($numbers as xs:integer+) as xs:integer
  : @see http://office.microsoft.com/en-us/excel/HP052091521033.aspx
  : @param $numbers The sequence of one or more positive integers.
  : @return The LCM as integer.
- : @error XQP0021(errNum) if any number is smaller than zero.
+ : @error excel-err:Num if any number is smaller than zero.
  : @example test/Queries/excel/math/priority1/lcm1.xq
  : @example test/Queries/excel/math/priority1/lcm2.xq
  : @example test/Queries/excel/math/priority1/lcm3.xq
@@ -842,7 +839,7 @@ declare function excel:lcm($numbers as xs:integer+) as xs:integer
  : @param $number The value to round, castable to numeric type.
  : @param $multiple The multiple to which you want to round number.
  : @return The rounded number up to the desired multiple.
- : @error XQP0021(errValue) if parameters cannot be casted to numeric type.
+ : @error excel-err:Value if parameters cannot be casted to numeric type.
  : @example test/Queries/excel/math/priority1/mround1.xq
  : @example test/Queries/excel/math/priority1/mround2.xq
  : @example test/Queries/excel/math/priority1/mround3.xq
@@ -891,7 +888,7 @@ declare function excel:radians($degree as xs:integer) as xs:decimal
  : @see http://office.microsoft.com/en-us/excel/HP052092381033.aspx
  : @param $number A positive integer.
  : @return The roman string representation.
- : @error XQP0021(errNum) if the input integer is negative 
+ : @error excel-err:Num if the input integer is negative 
  : @example test/Queries/excel/math/priority1/roman1.xq
  : @example test/Queries/excel/math/priority1/roman2.xq
  : @example test/Queries/excel/math/priority1/roman3.xq
@@ -899,7 +896,7 @@ declare function excel:radians($degree as xs:integer) as xs:decimal
 declare function excel:roman($number as xs:integer) as xs:string
 {
   if ($number lt 0) then
-    fn:error($excel-err:errNum, "Roman function: number should be greater than zero or equal")
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Roman function: number should be greater than zero or equal")
   else if ($number ge 1000) then
     fn:concat("M", excel:roman($number - 1000))
   else if ($number ge 900) then

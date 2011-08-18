@@ -14,7 +14,6 @@
 
 DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/excel/datetime" VERSION 1.0 FILE "datetime.xq")
 DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/excel/engineering" VERSION 1.0 FILE "engineering.xq")
-DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/excel/errors" VERSION 1.0 FILE "errors.xq")
 DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/excel/information" VERSION 1.0 FILE "information.xq")
 DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/excel/logical" VERSION 1.0 FILE "logical.xq")
 DECLARE_ZORBA_MODULE (URI "http://www.zorba-xquery.com/modules/excel/lookup" VERSION 1.0 FILE "lookup.xq")

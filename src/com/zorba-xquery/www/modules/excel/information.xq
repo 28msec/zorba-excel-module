@@ -29,10 +29,7 @@ xquery version "3.0";
  :)
 module namespace  excel-information = "http://www.zorba-xquery.com/modules/excel/information" ;
 
-(:~
- : Use excel-err module functions for throwing errors.
- :)
-import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
 
 (:~
  : Import excel-math module functions.
@@ -60,7 +57,7 @@ declare function excel-information:is-blank
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052091481033.aspx
  : @param   $value the value.
- : @error   XQP0021(errValue) if provided value is not a number.
+ : @error   excel-err:Value if provided value is not a number.
  : @return  TRUE if number is even, FALSE if number is odd.
  :)
 declare function excel-information:is-even
@@ -69,7 +66,7 @@ declare function excel-information:is-even
  if(excel-math:is-a-number($value)) then
   fn:not(fn:boolean(fn:floor(fn:abs(fn:number($value))) mod 2))
  else
-  fn:error($excel-err:errValue, "Provided value is not a number", $value)
+  fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value is not a number", $value)
  };
 
 (:~
@@ -77,7 +74,7 @@ declare function excel-information:is-even
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052091491033.aspx
  : @param   $value the value.
- : @error   XQP0021(errValue) if provided value is not a number.
+ : @error   excel-err:Value if provided value is not a number.
  : @return  TRUE if number is odd, FALSE if number is even.
  :)
 declare function excel-information:is-odd
@@ -86,7 +83,7 @@ declare function excel-information:is-odd
  if(excel-math:is-a-number($value)) then
   fn:boolean(fn:floor(fn:abs(fn:number($value))) mod 2)
  else
-  fn:error($excel-err:errValue, "Provided value is not a number", $value)
+  fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value is not a number", $value)
  };
 
 (:~
@@ -150,13 +147,14 @@ declare function excel-information:n
  };
 
 (:~
- : Returns the error value #N/A.
+ : Raises the error value #N/A.
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052091881033.aspx
+ : @error excel-err:NA the purpose of this function is to raise this error
  : @return  The error value #N/A. #N/A is the error value that means "no value is available."
  :)
 declare function excel-information:na
   ()  as xs:anyAtomicType {
 
-  fn:error($excel-err:errNA, "No value is available")
+  fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "No value is available")
  };

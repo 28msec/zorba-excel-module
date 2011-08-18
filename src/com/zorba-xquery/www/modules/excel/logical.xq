@@ -31,10 +31,7 @@ xquery version "1.0";
 
 module namespace  excel-logical = "http://www.zorba-xquery.com/modules/excel/logical" ;
 
-(:~
- : Use excel-err module functions for throwing errors.
- :)
-import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
 
 declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
 declare option ver:module-version "1.0";
@@ -58,7 +55,7 @@ declare function excel-logical:and
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052089861033.aspx
  : @param   $values the sequence of arguments.
- : @error   XQP0021(errValue) provided sequence is empty.
+ : @error   excel-err:Value provided sequence is empty.
  : @return  TRUE if all its arguments are TRUE; FALSE if one or more arguments are FALSE.
  :)
 declare function excel-logical:and
@@ -66,7 +63,7 @@ declare function excel-logical:and
   let $distValues := distinct-values($values)
   return
   if(fn:empty($distValues)) then
-    fn:error($excel-err:errValue, "Provided sequence is empty", $values)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided sequence is empty", $values)
   else
     every $value in $distValues satisfies $value eq fn:true()
  };
@@ -109,7 +106,7 @@ declare function excel-logical:or
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052092091033.aspx
  : @param   $values the sequence of arguments.
- : @error   XQP0021(errValue) provided sequence is empty.
+ : @error   excel-err:Value provided sequence is empty.
  : @return  TRUE if any argument is TRUE; FALSE if all arguments are FALSE.
  :)
 declare function excel-logical:or
@@ -117,7 +114,7 @@ declare function excel-logical:or
   let $distValues := distinct-values($values)
   return
   if(fn:empty($distValues)) then
-    fn:error($excel-err:errValue, "Provided sequence is empty", $values)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided sequence is empty", $values)
   else
     some $value in $distValues satisfies $value eq fn:true()
  };

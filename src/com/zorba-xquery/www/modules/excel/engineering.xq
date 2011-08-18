@@ -29,10 +29,7 @@ xquery version "3.0";
  :)
 module namespace  excel-engineering = "http://www.zorba-xquery.com/modules/excel/engineering" ;
 
-(:~
- : Use excel-err module functions for throwing errors.
- :)
-import module namespace excel-err="http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
 
 (:~
  : Import excel-text module functions.
@@ -97,14 +94,14 @@ declare %private function excel-engineering:is-bin
  : Returns a binary representation of a number.
  :
  : @param   $number the number.
- : @error   XQP0021(errValue) if provided value for $number is not numeric.
+ : @error   excel-err:Value if provided value for $number is not numeric.
  : @return  A binary representation of a number.
  :)
 declare %private function excel-engineering:dec2hexUtil
     ($number as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($number))) then
-       fn:error($excel-err:errValue, "Provided value for 'number' is not numeric", $number)
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $number)
     else
       let $tmpNumber := xs:integer($number) 
 
@@ -120,14 +117,14 @@ declare %private function excel-engineering:dec2hexUtil
  : Returns an octal representation of a number.
  :
  : @param   $number the number.
- : @error   XQP0021(errValue) if provided value for $number is not numeric.
+ : @error   excel-err:Value if provided value for $number is not numeric.
  : @return  An octal representation of a number.
  :)
 declare %private function excel-engineering:dec2octUtil
     ($number as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($number))) then
-       fn:error($excel-err:errValue, "Provided value for 'number' is not numeric", $number)
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $number)
     else
       let $tmpNumber := xs:integer($number) 
 
@@ -143,14 +140,14 @@ declare %private function excel-engineering:dec2octUtil
  : Returns a binary representation of a number.
  :
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $number is not numeric.
+ : @error   excel-err:Value if provided value for $number is not numeric.
  : @return  A binary representation of a number.
  :)
 declare %private function excel-engineering:dec2binUtil
     ($arg as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error($excel-err:errValue, "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else
       let $tmpNumber := xs:integer($arg) 
 
@@ -166,7 +163,7 @@ declare %private function excel-engineering:dec2binUtil
  : Returns a decimal representation of a number given it's hexadecimal representation.
  :
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided $arg is not a hexadecimal representation of a number.
+ : @error   excel-err:Value if provided $arg is not a hexadecimal representation of a number.
  : @return  A decimal representation of a number given it's hexadecimal representation.
  :)
 declare %private function excel-engineering:hex2decUtil
@@ -176,7 +173,7 @@ declare %private function excel-engineering:hex2decUtil
     let $hexCP := (48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 65, 66, 67, 68, 69, 70)
 
     return if (fn:not(excel-engineering:is-hex($number))) then
-      fn:error($excel-err:errValue, "Provided string is not a hexadecimal representation of a number", $number)
+      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not a hexadecimal representation of a number", $number)
     else
       let $tmp := fn:reverse(fn:string-to-codepoints($number))
       return  fn:sum(for $val in (0 to fn:string-length($number)-1)
@@ -187,14 +184,14 @@ declare %private function excel-engineering:hex2decUtil
  : Returns a decimal representation of a number given it's octal representation.
  :
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided $arg is not an octal representation of a number.
+ : @error   excel-err:Value if provided $arg is not an octal representation of a number.
  : @return  A decimal representation of a number given it's octal representation.
  :)
 declare %private function excel-engineering:oct2decUtil
     ($arg as xs:string) as xs:integer {
 
     if (fn:not(excel-engineering:is-oct($arg))) then
-      fn:error($excel-err:errValue, "Provided string is not an octal representation of a number", $arg)
+      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not an octal representation of a number", $arg)
     else
       let $tmp := fn:reverse(fn:string-to-codepoints($arg))
       return fn:sum(for $val in (0 to fn:string-length($arg)-1)
@@ -205,14 +202,14 @@ declare %private function excel-engineering:oct2decUtil
  : Returns a decimal representation of a number given it's binary representation.
  :
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided $arg is not an binary representation of a number.
+ : @error   excel-err:Value if provided $arg is not an binary representation of a number.
  : @return  A decimal representation of a number given it's binary representation.
  :)
 declare %private function excel-engineering:bin2decUtil
     ($arg as xs:string) as xs:integer {
 
     if (fn:not(excel-engineering:is-bin($arg))) then
-      fn:error($excel-err:errValue, "Provided string is not a binary representation of a number", $arg)
+      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not a binary representation of a number", $arg)
     else
       let $tmp := fn:reverse(fn:string-to-codepoints($arg))
       return fn:sum(for $val in (0 to fn:string-length($arg)-1)
@@ -224,21 +221,21 @@ declare %private function excel-engineering:bin2decUtil
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052090541033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not numeric.
- : @error   XQP0021(errNum) if provided value for $arg is smaller than -549755813888 or bigger than 549755813887
+ : @error   excel-err:Value if provided value for $arg is not numeric.
+ : @error   excel-err:Num if provided value for $arg is smaller than -549755813888 or bigger than 549755813887
  : @return  A hexadecimal representation of a number given it's decimal representation.
  :)
 declare function excel-engineering:dec2hex
     ($arg as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error($excel-err:errValue, "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else
       let $tmpNumber := xs:integer($arg) 
 
       return
       if(($tmpNumber < -549755813888) or ($tmpNumber > 549755813887)) then
-        fn:error($excel-err:errNum, "Provided value for 'number' is smaller than -549755813888 or bigger than 549755813887", $tmpNumber)
+        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -549755813888 or bigger than 549755813887", $tmpNumber)
       else if($tmpNumber < 0) then
           let $tmp := 1 + excel-engineering:hex2decUtil(fn:translate(
                       excel-text:pad-integer-to-length(excel-engineering:dec2hexUtil(fn:abs($tmpNumber)), "0", 10),
@@ -255,11 +252,11 @@ declare function excel-engineering:dec2hex
  : @see     http://office.microsoft.com/en-us/excel/HP052090541033.aspx?pid=CH062528241033
  : @param   $arg the number.
  : @param   $places is the number of characters to use. Places is useful for padding the return value with leading 0s (zeros).
- : @error   XQP0021(errValue) if provided value for $arg is not numeric.
- : @error   XQP0021(errValue) if provided value for $places is not numeric.
- : @error   XQP0021(errNum) if provided value for $places is zero or negative.
- : @error   XQP0021(errNum) if provided value for $places is too small.
- : @error   XQP0021(errNum) if provided value for $arg is smaller than -549755813888 or bigger than 549755813887.
+ : @error   excel-err:Value if provided value for $arg is not numeric.
+ : @error   excel-err:Value if provided value for $places is not numeric.
+ : @error   excel-err:Num if provided value for $places is zero or negative.
+ : @error   excel-err:Num if provided value for $places is too small.
+ : @error   excel-err:Num if provided value for $arg is smaller than -549755813888 or bigger than 549755813887.
  : @return  A hexadecimal representation of a number given it's decimal representation.
  :)
 declare function excel-engineering:dec2hex
@@ -267,18 +264,18 @@ declare function excel-engineering:dec2hex
      $places as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error($excel-err:errValue, "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else if(fn:not(excel-math:is-a-number($places))) then
-       fn:error($excel-err:errValue, "Provided value for 'places' is not numeric", $places) 
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'places' is not numeric", $places) 
     else
       let $tmpNumber := xs:integer($arg) 
       let $tmpPlaces := xs:integer($places)
 
       return
         if(($tmpNumber < -549755813888) or ($tmpNumber > 549755813887)) then
-        fn:error($excel-err:errNum, "Provided value for 'number' is smaller than -549755813888 or bigger than 549755813887", $tmpNumber) 
+        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -549755813888 or bigger than 549755813887", $tmpNumber) 
         else if($tmpPlaces < 1) then
-          fn:error($excel-err:errNum, "Provided value for 'places' is zero or negative", $tmpPlaces)
+          fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' is zero or negative", $tmpPlaces)
         else
           if($tmpNumber < 0) then
             let $tmp := 1 + excel-engineering:hex2decUtil(fn:translate(
@@ -289,7 +286,7 @@ declare function excel-engineering:dec2hex
           else
             let $tmp := excel-engineering:dec2hexUtil($tmpNumber)
             return if($tmpPlaces < fn:string-length($tmp)) then
-              fn:error($excel-err:errNum, "Provided value for 'places' too small", $tmpPlaces)
+              fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' too small", $tmpPlaces)
             else
               excel-text:pad-integer-to-length($tmp, "0", $tmpPlaces)
 };
@@ -299,21 +296,21 @@ declare function excel-engineering:dec2hex
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052090551033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not numeric.
- : @error   XQP0021(errNum) if provided value for $arg is smaller than -536870912 or bigger than 536870911.
+ : @error   excel-err:Value if provided value for $arg is not numeric.
+ : @error   excel-err:Num if provided value for $arg is smaller than -536870912 or bigger than 536870911.
  : @return  An octal representation of a number given it's decimal representation.
  :)
 declare function excel-engineering:dec2oct
     ($arg as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error($excel-err:errValue, "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else
       let $tmpNumber := xs:integer($arg) 
 
       return
       if(($tmpNumber < -536870912) or ($tmpNumber > 536870911)) then
-        fn:error($excel-err:errNum, "Provided value for 'number' is smaller than -536870912 or bigger than 536870911", $tmpNumber)
+        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -536870912 or bigger than 536870911", $tmpNumber)
       else if($tmpNumber < 0) then
           let $tmp := 1 + excel-engineering:oct2decUtil(fn:translate(
                       excel-text:pad-integer-to-length(excel-engineering:dec2octUtil(fn:abs($tmpNumber)), "0", 10), 
@@ -330,11 +327,11 @@ declare function excel-engineering:dec2oct
  : @see     http://office.microsoft.com/en-us/excel/HP052090551033.aspx?pid=CH062528241033
  : @param   $arg the number
  : @param   $places is the number of characters to use. Places is useful for padding the return value with leading 0s (zeros).
- : @error   XQP0021(errValue) if provided value for $arg is not numeric
- : @error   XQP0021(errValue) if provided value for $places is not numeric
- : @error   XQP0021(errNum) if provided value for $places is zero or negative
- : @error   XQP0021(errNum) if provided value for $places is too small
- : @error   XQP0021(errNum) if provided value for $arg is smaller than -536870912 or bigger than 536870911
+ : @error   excel-err:Value if provided value for $arg is not numeric
+ : @error   excel-err:Value if provided value for $places is not numeric
+ : @error   excel-err:Num if provided value for $places is zero or negative
+ : @error   excel-err:Num if provided value for $places is too small
+ : @error   excel-err:Num if provided value for $arg is smaller than -536870912 or bigger than 536870911
  : @return  An octal representation of a number given it's decimal representation.
  :)
 declare function excel-engineering:dec2oct
@@ -342,18 +339,18 @@ declare function excel-engineering:dec2oct
      $places as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error($excel-err:errValue, "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else if(fn:not(excel-math:is-a-number($places))) then
-       fn:error($excel-err:errValue, "Provided value for 'places' is not numeric", $places)
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'places' is not numeric", $places)
     else
       let $tmpNumber := xs:integer($arg) 
       let $tmpPlaces := xs:integer($places)
 
       return
         if(($tmpNumber < -536870912) or ($tmpNumber > 536870911)) then
-          fn:error($excel-err:errNum, "Provided value for 'number' is smaller than -536870912 or bigger than 536870911", $tmpNumber)
+          fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -536870912 or bigger than 536870911", $tmpNumber)
         else if($tmpPlaces < 1) then
-          fn:error($excel-err:errNum, "Provided value for 'places' is zero or negative", $tmpPlaces)
+          fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' is zero or negative", $tmpPlaces)
         else
           if($tmpNumber < 0) then
             let $tmp := 1 + excel-engineering:oct2decUtil(fn:translate(
@@ -364,7 +361,7 @@ declare function excel-engineering:dec2oct
           else
             let $tmp := excel-engineering:dec2octUtil($tmpNumber)
             return if($tmpPlaces < fn:string-length($tmp)) then
-              fn:error($excel-err:errNum, "Provided value for 'places' too small", $tmpPlaces)
+              fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' too small", $tmpPlaces)
             else
               excel-text:pad-integer-to-length($tmp, "0", $tmpPlaces)
 };
@@ -374,21 +371,21 @@ declare function excel-engineering:dec2oct
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052090531033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not numeric.
- : @error   XQP0021(errNum) if provided value for $arg is smaller than -512 or bigger than 511.
+ : @error   excel-err:Value if provided value for $arg is not numeric.
+ : @error   excel-err:Num if provided value for $arg is smaller than -512 or bigger than 511.
  : @return  A binary representation of a number given it's decimal representation.
  :)
 declare function excel-engineering:dec2bin
     ($arg as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error($excel-err:errValue, "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else
       let $tmpNumber := xs:integer($arg) 
 
       return
       if(($tmpNumber < -512) or ($tmpNumber > 511)) then
-        fn:error($excel-err:errNum, "Provided value for 'number' is smaller than -512 or bigger than 511", $tmpNumber)
+        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -512 or bigger than 511", $tmpNumber)
       else
         if($tmpNumber < 0) then
           let $tmp := 1 + excel-engineering:bin2decUtil(fn:translate(
@@ -406,11 +403,11 @@ declare function excel-engineering:dec2bin
  : @see     http://office.microsoft.com/en-us/excel/HP052090531033.aspx?pid=CH062528241033
  : @param   $arg the number.
  : @param   $places is the number of characters to use. Places is useful for padding the return value with leading 0s (zeros).
- : @error   XQP0021(errValue) if provided value for $arg is not numeric.
- : @error   XQP0021(errValue) if provided value for $places is not numeric.
- : @error   XQP0021(errNum) if provided value for $places is zero or negative.
- : @error   XQP0021(errNum) if provided value for $places is too small.
- : @error   XQP0021(errNum) if provided value for $arg is smaller than -512 or bigger than 511.
+ : @error   excel-err:Value if provided value for $arg is not numeric.
+ : @error   excel-err:Value if provided value for $places is not numeric.
+ : @error   excel-err:Num if provided value for $places is zero or negative.
+ : @error   excel-err:Num if provided value for $places is too small.
+ : @error   excel-err:Num if provided value for $arg is smaller than -512 or bigger than 511.
  : @return  A binary representation of a number given it's decimal representation.
  :)
 declare function excel-engineering:dec2bin
@@ -418,18 +415,18 @@ declare function excel-engineering:dec2bin
      $places as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error($excel-err:errValue, "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"),"Provided value for 'number' is not numeric", $arg)
     else if(fn:not(excel-math:is-a-number($places))) then
-       fn:error($excel-err:errValue, "Provided value for 'places' is not numeric", $places)
+       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'places' is not numeric", $places)
     else
       let $tmpNumber := xs:integer($arg) 
       let $tmpPlaces := xs:integer($places)
 
       return
       if(($tmpNumber < -512) or ($tmpNumber > 511)) then
-        fn:error($excel-err:errNum, "Provided value for 'number' is smaller than -512 or bigger than 511", $tmpNumber)
+        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -512 or bigger than 511", $tmpNumber)
       else if($tmpPlaces < 1) then
-        fn:error($excel-err:errNum, "Provided value for 'places' is zero or negative", $tmpPlaces)
+        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' is zero or negative", $tmpPlaces)
       else
         if($tmpNumber < 0) then
           let $tmp := 1 + excel-engineering:bin2decUtil(fn:translate(
@@ -440,7 +437,7 @@ declare function excel-engineering:dec2bin
         else
           let $tmp := excel-engineering:dec2binUtil($tmpNumber)
           return if($tmpPlaces < fn:string-length($tmp)) then
-            fn:error($excel-err:errNum, "Provided value for 'places' too small", $tmpPlaces)
+            fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' too small", $tmpPlaces)
           else
             excel-text:pad-integer-to-length($tmp, "0", $tmpPlaces)
 };
@@ -450,8 +447,8 @@ declare function excel-engineering:dec2bin
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052092001033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not an octal representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $arg is not an octal representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
  : @return  A binary representation of a number given it's octal representation.
  :)
 declare function excel-engineering:oct2bin
@@ -466,11 +463,11 @@ declare function excel-engineering:oct2bin
  : @see     http://office.microsoft.com/en-us/excel/HP052092001033.aspx?pid=CH062528241033
  : @param   $arg the number.
  : @param   $places is the number of characters to use. Places is useful for padding the return value with leading 0s (zeros).
- : @error   XQP0021(errValue) if provided value for $arg is not an octal representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
- : @error   XQP0021(errValue) if provided value for $places is not numeric.
- : @error   XQP0021(errNum) if provided value for $places is zero or negative.
- : @error   XQP0021(errNum) if provided value for $places is too small.
+ : @error   excel-err:Value if provided value for $arg is not an octal representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $places is not numeric.
+ : @error   excel-err:Num if provided value for $places is zero or negative.
+ : @error   excel-err:Num if provided value for $places is too small.
  : @return  A binary representation of a number given it's octal representation.
  :)
 declare function excel-engineering:oct2bin
@@ -485,8 +482,8 @@ declare function excel-engineering:oct2bin
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052092011033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not an octal representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $arg is not an octal representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
  : @return  A decimal representation of a number given it's octal representation.
  :)
 declare function excel-engineering:oct2dec
@@ -494,9 +491,9 @@ declare function excel-engineering:oct2dec
 
   let $number := fn:string($arg)
   return if (fn:not(excel-engineering:is-oct($number))) then
-    fn:error($excel-err:errValue, "Provided string is not an octal representation of a number", $number)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not an octal representation of a number", $number)
   else if(fn:string-length($number) > 10) then 
-    fn:error($excel-err:errValue, "Number contains more than 10 characters", $number)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Number contains more than 10 characters", $number)
   else
     if((fn:string-length($number) eq 10) and
               fn:substring($number, 1, 1) eq "7") then
@@ -510,8 +507,8 @@ declare function excel-engineering:oct2dec
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052090021033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not a binary representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $arg is not a binary representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
  : @return  A decimal representation of a number given it's binary representation.
  :)
 declare function excel-engineering:bin2dec
@@ -519,9 +516,9 @@ declare function excel-engineering:bin2dec
 
   let $number := fn:string($arg)
   return if (fn:not(excel-engineering:is-bin($number))) then
-    fn:error($excel-err:errValue, "Provided string is not a binary representation of a number", $number)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not a binary representation of a number", $number)
   else if(fn:string-length($number) > 10) then
-    fn:error($excel-err:errValue, "Number contains more than 10 characters", $number)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Number contains more than 10 characters", $number)
   else
     if((fn:string-length($number) eq 10) and
        (fn:substring($number, 1, 1) eq "1")) then
@@ -535,8 +532,8 @@ declare function excel-engineering:bin2dec
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052092021033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not an octal representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $arg is not an octal representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
  : @return  A hexadecimal representation of a number given it's octal representation.
  :)
 declare function excel-engineering:oct2hex
@@ -551,11 +548,11 @@ declare function excel-engineering:oct2hex
  : @see     http://office.microsoft.com/en-us/excel/HP052092021033.aspx?pid=CH062528241033
  : @param   $arg the number.
  : @param   $places is the number of characters to use. Places is useful for padding the return value with leading 0s (zeros).
- : @error   XQP0021(errValue) if provided value for $arg is not an octal representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
- : @error   XQP0021(errValue) if provided value for $places is not numeric.
- : @error   XQP0021(errNum) if provided value for $places is zero or negative.
- : @error   XQP0021(errNum) if provided value for $places is too small.
+ : @error   excel-err:Value if provided value for $arg is not an octal representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $places is not numeric.
+ : @error   excel-err:Num if provided value for $places is zero or negative.
+ : @error   excel-err:Num if provided value for $places is too small.
  : @return  A hexadecimal representation of a number given it's octal representation.
  :)
 declare function excel-engineering:oct2hex
@@ -570,8 +567,8 @@ declare function excel-engineering:oct2hex
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052091101033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not a hexadecimal representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $arg is not a hexadecimal representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
  : @return  A binary representation of a number given it's hexadecimal representation.
  :)
 declare function excel-engineering:hex2bin
@@ -586,11 +583,11 @@ declare function excel-engineering:hex2bin
  : @see     http://office.microsoft.com/en-us/excel/HP052091101033.aspx?pid=CH062528241033
  : @param   $arg the number.
  : @param   $places is the number of characters to use. Places is useful for padding the return value with leading 0s (zeros).
- : @error   XQP0021(errValue) if provided value for $arg is not a hexadecimal representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
- : @error   XQP0021(errValue) if provided value for $places is not numeric.
- : @error   XQP0021(errNum) if provided value for $places is zero or negative.
- : @error   XQP0021(errNum) if provided value for $places is too small.
+ : @error   excel-err:Value if provided value for $arg is not a hexadecimal representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $places is not numeric.
+ : @error   excel-err:Num if provided value for $places is zero or negative.
+ : @error   excel-err:Num if provided value for $places is too small.
  : @return  A binary representation of a number given it's hexadecimal representation.
  :)
 declare function excel-engineering:hex2bin
@@ -605,8 +602,8 @@ declare function excel-engineering:hex2bin
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052091121033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not a hexadecimal representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $arg is not a hexadecimal representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
  : @return  A octal representation of a number given it's hexadecimal representation.
  :)
 declare function excel-engineering:hex2oct
@@ -621,11 +618,11 @@ declare function excel-engineering:hex2oct
  : @see     http://office.microsoft.com/en-us/excel/HP052091121033.aspx?pid=CH062528241033
  : @param   $arg the number.
  : @param   $places is the number of characters to use. Places is useful for padding the return value with leading 0s (zeros).
- : @error   XQP0021(errValue) if provided value for $arg is not a hexadecimal representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
- : @error   XQP0021(errValue) if provided value for $places is not numeric.
- : @error   XQP0021(errNum) if provided value for $places is zero or negative.
- : @error   XQP0021(errNum) if provided value for $places is too small.
+ : @error   excel-err:Value if provided value for $arg is not a hexadecimal representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $places is not numeric.
+ : @error   excel-err:Num if provided value for $places is zero or negative.
+ : @error   excel-err:Num if provided value for $places is too small.
  : @return  A octal representation of a number given it's hexadecimal representation.
  :)
 declare function excel-engineering:hex2oct
@@ -640,8 +637,8 @@ declare function excel-engineering:hex2oct
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052091111033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not a hexadecimal representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $arg is not a hexadecimal representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
  : @return  A decimal representation of a number given it's hexadecimal representation.
  :)
 declare function excel-engineering:hex2dec
@@ -649,9 +646,9 @@ declare function excel-engineering:hex2dec
 
   let $number := fn:upper-case($arg)
   return if (fn:not(excel-engineering:is-hex($number))) then
-    fn:error($excel-err:errValue, "Provided string is not a hexadecimal representation of a number", $arg)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not a hexadecimal representation of a number", $arg)
   else if(fn:string-length($number) > 10) then 
-    fn:error($excel-err:errValue, "Number contains more than 10 characters", $arg)
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Number contains more than 10 characters", $arg)
   else   
     if((fn:string-length($number) eq 10) and
         fn:substring($number, 1, 1) eq "F") then
@@ -665,8 +662,8 @@ declare function excel-engineering:hex2dec
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052090041033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not a binary representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $arg is not a binary representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
  : @return  A octal representation of a number given it's binary representation.
  :)
 declare function excel-engineering:bin2oct
@@ -681,11 +678,11 @@ declare function excel-engineering:bin2oct
  : @see     http://office.microsoft.com/en-us/excel/HP052090041033.aspx?pid=CH062528241033
  : @param   $arg the number.
  : @param   $places is the number of characters to use. Places is useful for padding the return value with leading 0s (zeros).
- : @error   XQP0021(errValue) if provided value for $arg is not a binary representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
- : @error   XQP0021(errValue) if provided value for $places is not numeric.
- : @error   XQP0021(errNum) if provided value for $places is zero or negative.
- : @error   XQP0021(errNum) if provided value for $places is too small.
+ : @error   excel-err:Value if provided value for $arg is not a binary representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $places is not numeric.
+ : @error   excel-err:Num if provided value for $places is zero or negative.
+ : @error   excel-err:Num if provided value for $places is too small.
  : @return  A octal representation of a number given it's binary representation.
  :)
 declare function excel-engineering:bin2oct
@@ -700,8 +697,8 @@ declare function excel-engineering:bin2oct
  :
  : @see     http://office.microsoft.com/en-us/excel/HP052090031033.aspx?pid=CH062528241033
  : @param   $arg the number.
- : @error   XQP0021(errValue) if provided value for $arg is not a binary representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $arg is not a binary representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
  : @return  A hexadecimal representation of a number given it's binary representation.
  :)
 declare function excel-engineering:bin2hex
@@ -716,11 +713,11 @@ declare function excel-engineering:bin2hex
  : @see     http://office.microsoft.com/en-us/excel/HP052090031033.aspx?pid=CH062528241033
  : @param   $arg the number.
  : @param   $places is the number of characters to use. Places is useful for padding the return value with leading 0s (zeros).
- : @error   XQP0021(errValue) if provided value for $arg is not a binary representation of a number.
- : @error   XQP0021(errValue) if provided value for $arg contains more than 10 characters.
- : @error   XQP0021(errValue) if provided value for $places is not numeric.
- : @error   XQP0021(errNum) if provided value for $places is zero or negative.
- : @error   XQP0021(errNum) if provided value for $places is too small.
+ : @error   excel-err:Value if provided value for $arg is not a binary representation of a number.
+ : @error   excel-err:Value if provided value for $arg contains more than 10 characters.
+ : @error   excel-err:Value if provided value for $places is not numeric.
+ : @error   excel-err:Num if provided value for $places is zero or negative.
+ : @error   excel-err:Num if provided value for $places is too small.
  : @return  A hexadecimal representation of a number given it's binary representation.
  :)
 declare function excel-engineering:bin2hex

@@ -33,8 +33,7 @@ excel-math="http://www.zorba-xquery.com/modules/excel/math";
 import module namespace
 excel-statistical="http://www.zorba-xquery.com/modules/excel/statistical";
 
-import module namespace
-excel-err="http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
 
 (:~
  : W3C Math namespace URI.
@@ -56,7 +55,7 @@ declare option ver:module-version "1.0";
  : @param $numbers the sequence of numbers or values castable to numeric
  :    The sequence can be of any length, from 1 up.
  : @return the standard deviation, as numeric type
- : @error the errors returned by VAR function
+ : @error excel-err:Value if the parameters cannot be casted to numeric type
  : @example test/Queries/excel/statistical/stdev1.xq
 :)
 declare function excel:stdev($numbers as xs:anyAtomicType+) as xs:anyAtomicType
@@ -75,7 +74,7 @@ declare function excel:stdev($numbers as xs:anyAtomicType+) as xs:anyAtomicType
  : @param $numbers the sequence of numbers or values castable to numeric
  :    The sequence can be of any length, from 1 up.
  : @return the standard deviation, as numeric type
- : @error the errors returned by VARA function
+ : @error excel-err:Value if the parameters cannot be casted to numeric type
  : @example test/Queries/excel/statistical/stdeva1.xq
 :)
 declare function excel:stdeva($numbers as xs:anyAtomicType+) as xs:anyAtomicType
@@ -94,7 +93,7 @@ declare function excel:stdeva($numbers as xs:anyAtomicType+) as xs:anyAtomicType
  : @param $numbers the sequence of numbers or values castable to numeric
  :    The sequence can be of any length, from 1 up.
  : @return the standard deviation, as numeric type
- : @error the errors returned by VARP function
+ : @error excel-err:Value if the parameters cannot be casted to numeric type
  : @example test/Queries/excel/statistical/stdevp1.xq
 :)
 declare function excel:stdevp($numbers as xs:anyAtomicType+) as xs:anyAtomicType
@@ -113,7 +112,7 @@ declare function excel:stdevp($numbers as xs:anyAtomicType+) as xs:anyAtomicType
  : @param $numbers the sequence of numbers or values castable to numeric
  :    The sequence can be of any length, from 1 up.
  : @return the standard deviation, as numeric type
- : @error the errors returned by VARPA function
+ : @error excel-err:Value if the parameters cannot be casted to numeric type
  : @example test/Queries/excel/statistical/stdevpa1.xq
 :)
 declare function excel:stdevpa($numbers as xs:anyAtomicType+) as xs:anyAtomicType
@@ -145,8 +144,8 @@ declare function excel:stdevpa($numbers as xs:anyAtomicType+) as xs:anyAtomicTyp
  : @param $numbers the sequence of numbers or values castable to numeric.
  :     The sequence can be of any length.
  : @return The function result, as numeric type
- : @error ** depends on the function called
- : @error XQP0021(errNum) if $function_num is not a value between 1 .. 11 or 101 .. 111
+ : @error depends on the function called
+ : @error excel-err:Num if $function_num is not a value between 1 .. 11 or 101 .. 111
  : @example test/Queries/excel/statistical/priority1/subtotal1.xq
  : @example test/Queries/excel/statistical/priority1/subtotal2.xq
  : @example test/Queries/excel/statistical/priority1/subtotal3.xq
@@ -194,5 +193,5 @@ declare function excel:subtotal($function_num as xs:integer, $numbers as xs:anyA
   if ($function_num = 11 or $function_num = 111) then
     excel-statistical:varp($numbers)
   else
-    fn:error($excel-err:errNum, "Subtotal function: function_num should be between 1 and 11 or 101 and 111")
+    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Subtotal function: function_num should be between 1 and 11 or 101 and 111")
 };
