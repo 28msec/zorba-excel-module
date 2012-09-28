@@ -23,9 +23,8 @@ xquery version "3.0";
  : @see <a href="http://office.microsoft.com/en-us/excel/CH062528231033.aspx"
  : target="_blank">Excel Documentation: Datetime Functions</a>
  :
- : @spec XQuery Specification: January 2007
  : @author Sorin Nasoi
- : @project excel
+ : @project Zorba/Excel/Datetime
  :
  :)
 module namespace  excel-datetime = "http://www.zorba-xquery.com/modules/excel/datetime" ;

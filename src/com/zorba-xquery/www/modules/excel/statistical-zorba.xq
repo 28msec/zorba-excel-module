@@ -23,7 +23,7 @@ xquery version "3.0";
  : 
  : @Author Daniel Turcanu
  : @See  http://office.microsoft.com/en-us/excel/CH062528311033.aspx
- : @project excel
+ : @project Zorba/Excel/Statistical Zorba
 :)
 module namespace  excel = "http://www.zorba-xquery.com/modules/excel/statistical-zorba" ;
 

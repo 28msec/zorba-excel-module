@@ -24,7 +24,7 @@ xquery version "1.0";
  :
  : @see <a href="http://office.microsoft.com/en-us/excel/CH062528271033.aspx"
  : target="_blank">Excel Documentation: Logical Functions</a>
- : @project excel
+ : @project Zorba/Excel/Logical
  :
  :)
 (:  for False,Not and True use fn:false(), fn:not(), fn:true() :)

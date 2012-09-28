@@ -25,9 +25,8 @@ xquery version "3.0";
  : @see <a href="http://office.microsoft.com/en-us/excel/HP052092931033.aspx"
  : target="_blank">Excel 2003 Documentation: Math-sumproduct Functions</a>
  :
- : @spec XQuery Specification: January 2007
  : @author Daniel Turcanu
- : @project excel
+ : @project Zorba/Excel/Math Sumproduct
  :
  :)
 module namespace  excel = "http://www.zorba-xquery.com/modules/excel/math-sumproduct";

@@ -25,7 +25,7 @@ xquery version "3.0";
  : @see <a href="http://office.microsoft.com/en-us/excel/CH062528241033.aspx"
  : target="_blank">Excel Documentation: Engineering Functions</a>
  :
- : @project excel
+ : @project Zorba/Excel/Engineering
  :)
 module namespace  excel-engineering = "http://www.zorba-xquery.com/modules/excel/engineering" ;
 

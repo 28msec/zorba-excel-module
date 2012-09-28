@@ -25,7 +25,7 @@ xquery version "3.0";
  : @see <a href="http://office.microsoft.com/en-us/excel/CH062528261033.aspx"
  : target="_blank">Excel Documentation: Information Functions</a>
  :
- : @project excel
+ : @project Zorba/Excel/Information
  :)
 module namespace  excel-information = "http://www.zorba-xquery.com/modules/excel/information" ;
 

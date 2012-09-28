@@ -23,9 +23,8 @@ xquery version "3.0";
  : @see <a href="http://office.microsoft.com/en-us/excel/CH062528311033.aspx"
  : target="_blank">Excel 2003 Documentation: Statistical Functions</a>
  :
- : @spec XQuery Specification: January 2007
  : @author Daniel Turcanu
- : @project excel
+ : @project Zorba/Excel/Statistical
  :
  :)
 module namespace  excel = "http://www.zorba-xquery.com/modules/excel/statistical" ;
