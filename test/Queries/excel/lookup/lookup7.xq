@@ -1,5 +1,5 @@
 import module namespace
-excel="http://www.zorba-xquery.com/modules/excel/lookup";
+excel="http://zorba.io/modules/excel/lookup";
 
 (: array form :)
 excel:lookup(4, 

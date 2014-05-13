@@ -27,16 +27,16 @@ xquery version "3.0";
  : @project Zorba/Excel/Statistical
  :
  :)
-module namespace  excel = "http://www.zorba-xquery.com/modules/excel/statistical" ;
+module namespace  excel = "http://zorba.io/modules/excel/statistical" ;
 
 (:~
  : Import excel-math module functions.
  :)
-import module namespace excel-math="http://www.zorba-xquery.com/modules/excel/math";
+import module namespace excel-math="http://zorba.io/modules/excel/math";
 
-declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://zorba.io/modules/excel/errors";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "1.0";
 
 (:~
@@ -201,7 +201,7 @@ declare function excel:median( $numbers as xs:anyAtomicType* ) as xs:anyAtomicTy
  : @param $numbers the sequence of numbers, of any length
  : @return The most occuring number
  : @error excel-err:Value if the parameters cannot be casted to numeric type
- : @error fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA") if there are no duplicate numbers
+ : @error fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA") if there are no duplicate numbers
  : @example test/Queries/excel/statistical/mode1.xq
  : @example test/Queries/excel/statistical/mode2.xq
  : @example test/Queries/excel/statistical/mode3.xq
@@ -209,7 +209,7 @@ declare function excel:median( $numbers as xs:anyAtomicType* ) as xs:anyAtomicTy
 declare function excel:mode( $numbers as xs:anyAtomicType* ) as xs:anyAtomicType
 {
   if ( fn:empty($numbers)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Mode function: empty sequence")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Mode function: empty sequence")
   else
   let $result := 
   ( for $n_at in fn:distinct-values($numbers) 
@@ -220,7 +220,7 @@ declare function excel:mode( $numbers as xs:anyAtomicType* ) as xs:anyAtomicType
     return $n
   ) return 
   if (fn:empty($result)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Mode function: no duplicate elements")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Mode function: no duplicate elements")
   else
     $result[1]
 };
@@ -245,7 +245,7 @@ declare function excel:percentile( $numbers as xs:anyAtomicType*, $k_at as xs:an
 {
   let $k := excel-math:cast-as-numeric($k_at) return
   if ($k < 0 or $k > 1) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Percentile function: k must be a value between 0 and 1 inclusive")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Percentile function: k must be a value between 0 and 1 inclusive")
   else
     let $max := excel:max($numbers)
     let $min := excel:min($numbers) return
@@ -309,7 +309,7 @@ declare %private function excel:add-all-cells($numbers as xs:anyAtomicType*) as 
   else (: if (fn:string($numbers[1]) = "") then :)
     excel:add-all-cells(fn:subsequence($numbers, 2))
 (:  else
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value is not a number or empty cell ", $numbers[1])
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value is not a number or empty cell ", $numbers[1])
 :)
 };
 
@@ -370,9 +370,9 @@ declare function excel:counta($numbers as xs:anyAtomicType*) as xs:integer
 declare function excel:large($numbers as xs:anyAtomicType*, $k as xs:integer) as xs:anyAtomicType
 {
   if (fn:empty($numbers)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Large function: value list must not be empty")  
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Large function: value list must not be empty")  
   else if ($k > fn:count($numbers) or $k le 0) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Large function: k must be between 1 and the count of numbers ", $k)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Large function: k must be between 1 and the count of numbers ", $k)
   else
     let $ordered_numbers :=
       (for $n in $numbers 
@@ -494,7 +494,7 @@ declare function excel:rank(
 (:~
  : Returns the rank of a value in a data set as a percentage of the data set.
  : If x does not match one of the values in array, 
- :   PERCENTRANK interpolates to return the correct percentage rank. <br/>
+ :   PERCENTRANK interpolates to return the correct percentage rank. <p/>
  : The formula is uses: (RANK - 1) / (size - 1) .
  : 
  : @see http://office.microsoft.com/en-us/excel/HP052092121033.aspx
@@ -513,7 +513,7 @@ declare function excel:rank(
 declare function excel:percentrank($numbers as xs:anyAtomicType*, $x as xs:anyAtomicType) as xs:decimal
 {
   if (fn:empty($numbers)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Percentrank function: value list must not be empty")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Percentrank function: value list must not be empty")
   else  
     let $rank := excel:rank($x, $numbers, fn:true()) return
     if ($rank = 0) then
@@ -547,7 +547,7 @@ declare function excel:percentrank($numbers as xs:anyAtomicType*, $x as xs:anyAt
 declare function excel:quartile($numbers as xs:anyAtomicType*, $quart as xs:integer) as xs:anyAtomicType
 {
   if (fn:empty($numbers)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Quartile function: value list must not be empty")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Quartile function: value list must not be empty")
   else  
   if ($quart = 0) then
     excel:min($numbers)
@@ -572,7 +572,7 @@ declare function excel:quartile($numbers as xs:anyAtomicType*, $quart as xs:inte
   if ($quart = 4) then
     excel:max($numbers)
   else
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Quartile function: quart should be between 0 and 4 :", $quart)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Quartile function: quart should be between 0 and 4 :", $quart)
 };
 
 (:~
@@ -596,9 +596,9 @@ declare function excel:quartile($numbers as xs:anyAtomicType*, $quart as xs:inte
 declare function excel:small($numbers as xs:anyAtomicType*, $k as xs:integer) as xs:anyAtomicType
 {
   if (fn:empty($numbers)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Small function: value list must not be empty")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Small function: value list must not be empty")
   else if ($k gt fn:count($numbers) or $k le 0) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Small function: k must be between 1 and the count of numbers ", $k)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Small function: k must be between 1 and the count of numbers ", $k)
   else
     let $ordered_numbers := (
         for $n in $numbers 
@@ -633,9 +633,9 @@ declare %private function excel:sumsq-deviations($numbers as xs:anyAtomicType*, 
 };
 
 (:~
- : Estimates variance based on a sample.<br/>
- : The formula is sum(x - average_x)^2 / (n - 1).<br/>
- : average_x is computed with AVERAGE function.<br/>
+ : Estimates variance based on a sample.<p/>
+ : The formula is sum(x - average_x)^2 / (n - 1).<p/>
+ : average_x is computed with AVERAGE function.<p/>
  : n is the count of numbers from the sequence, excluding empty values.
  : 
  : @see http://office.microsoft.com/en-us/excel/HP052093301033.aspx
@@ -653,10 +653,10 @@ declare function excel:var($numbers as xs:anyAtomicType+) as xs:anyAtomicType
 };
 
 (:~
- : Estimates variance based on a sample.<br/>
- : The formula is sum(x - average_x)^2 / (n - 1).<br/>
- : average_x is computed with AVERAGE function.<br/>
- : n is the size of sequence, including empty values.<br/>
+ : Estimates variance based on a sample.<p/>
+ : The formula is sum(x - average_x)^2 / (n - 1).<p/>
+ : average_x is computed with AVERAGE function.<p/>
+ : n is the size of sequence, including empty values.<p/>
  : 
  : @see http://office.microsoft.com/en-us/excel/HP052093311033.aspx
  : @param $numbers the sequence of numbers or values castable to numeric.
@@ -672,10 +672,10 @@ declare function excel:vara($numbers as xs:anyAtomicType+) as xs:anyAtomicType
 };
 
 (:~
- : Calculates variance based on the entire population.<br/>
- : The formula is sum(x - average_x)^2 / n.<br/>
- : average_x is computed with AVERAGE function.<br/>
- : n is the count of numbers from the sequence, excluding empty values.<br/>
+ : Calculates variance based on the entire population.<p/>
+ : The formula is sum(x - average_x)^2 / n.<p/>
+ : average_x is computed with AVERAGE function.<p/>
+ : n is the count of numbers from the sequence, excluding empty values.<p/>
  : 
  : @see http://office.microsoft.com/en-us/excel/HP052093321033.aspx
  : @param $numbers the sequence of numbers or values castable to numeric.
@@ -691,10 +691,10 @@ declare function excel:varp($numbers as xs:anyAtomicType+) as xs:anyAtomicType
 };
 
 (:~
- : Calculates variance based on the entire population.<br/>
- : The formula is sum(x - average_x)^2 / n.<br/>
- : average_x is computed with AVERAGE function.<br/>
- : n is the size of sequence, including empty values.<br/>
+ : Calculates variance based on the entire population.<p/>
+ : The formula is sum(x - average_x)^2 / n.<p/>
+ : average_x is computed with AVERAGE function.<p/>
+ : n is the size of sequence, including empty values.<p/>
  : 
  : @see http://office.microsoft.com/en-us/excel/HP052093321033.aspx
  : @param $numbers the sequence of numbers or values castable to numeric.
@@ -728,7 +728,7 @@ declare %private function excel:sum-prob($prob_range as xs:anyAtomicType*) as xs
     let $prob_num := excel-math:cast-as-numeric($prob_range[1])
   return
     if ($prob_num < 0 or $prob_num > 1) then
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Prob function: prob values should be between 0 and 1 ", $prob_num)
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Prob function: prob values should be between 0 and 1 ", $prob_num)
     else
       $prob_num + excel:sum-prob(fn:subsequence($prob_range, 2))
 };
@@ -754,9 +754,9 @@ declare %private function excel:sum-prob-x(
   $upper_limit        as xs:anyAtomicType) as xs:anyAtomicType
 {
   if (fn:empty($x_range) and fn:not(fn:empty($prob_range))) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Prob function: x range and prob range should have the same number of elements")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Prob function: x range and prob range should have the same number of elements")
   else if (fn:empty($prob_range) and fn:not(fn:empty($x_range))) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Prob function: x range and prob range should have the same number of elements")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Prob function: x range and prob range should have the same number of elements")
   else if (fn:empty($prob_range) and fn:empty($x_range)) then
     0
   else
@@ -797,7 +797,7 @@ declare function excel:prob($x_range as xs:anyAtomicType+,
 {
   let $prob_sum := excel:sum-prob($prob_range) return
   if ($prob_sum != 1) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Prob function: prob sum should equal 1")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Prob function: prob sum should equal 1")
   else
     excel:sum-prob-x($x_range, $prob_range, 
                     excel-math:cast-as-numeric($range_lower_limit), 
@@ -830,8 +830,8 @@ declare function excel:prob($x_range as xs:anyAtomicType+,
 (:~
  : Function for SLOPE function.
  : This function should not be used outside this module.
- : It computes the formula:<br/>
- : sum((x - average_x)(y - average_y)) <br/>
+ : It computes the formula:<p/>
+ : sum((x - average_x)(y - average_y)) <p/>
  : where average_x and average_y are computed with AVERAGE function.
  :
  : @param $x_numbers The sequence of x numbers.
@@ -840,7 +840,7 @@ declare function excel:prob($x_range as xs:anyAtomicType+,
  : @param $y_average The precomputed AVERAGE over the y_numbers.
  : @return The formula result, as numeric type.
  : @error excel-err:Value if any parameter cannot be casted to numeric.
- : @error fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA") if there are different numbers of x's and y's.
+ : @error fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA") if there are different numbers of x's and y's.
  :)
 declare %private function excel:sum-x-y-deviations(
   $x_numbers as xs:anyAtomicType*, 
@@ -849,9 +849,9 @@ declare %private function excel:sum-x-y-deviations(
   $y_average as xs:anyAtomicType) as xs:anyAtomicType
 {
   if (fn:empty($x_numbers) and fn:not(fn:empty($y_numbers))) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Slope function: different number of x's and y's")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Slope function: different number of x's and y's")
   else if (fn:empty($y_numbers) and fn:not(fn:empty($x_numbers))) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Slope function: different number of x's and y's")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Slope function: different number of x's and y's")
   else if (fn:empty($x_numbers) and fn:empty($y_numbers)) then
     0
   else
@@ -866,8 +866,8 @@ declare %private function excel:sum-x-y-deviations(
  : Returns the slope of the linear regression line through data points in known_y's and known_x's.
  : The slope is the vertical distance divided by the horizontal distance between 
  :   any two points on the line, which is the rate of change along the regression line.
- : It computes the formula:<br/>
- : sum((x - average_x)(y - average_y)) / sum((x - average_x)^2)  <br/>
+ : It computes the formula:<p/>
+ : sum((x - average_x)(y - average_y)) / sum((x - average_x)^2)  <p/>
  : where average_x and average_y are computed with AVERAGE function.
  : 
  : @see http://office.microsoft.com/en-us/excel/HP052092641033.aspx
@@ -877,8 +877,8 @@ declare %private function excel:sum-x-y-deviations(
  :    The sequence can be of any length, from 1 up.  
  : @return The slope value, as numeric type
  : @error excel-err:Value if any parameter cannot be casted to numeric
- : @error fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA") if there are different numbers of x's and y's
- : @error fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA") if any sequence is empty
+ : @error fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA") if there are different numbers of x's and y's
+ : @error fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA") if any sequence is empty
  : @error excel-err:Div0 if all x's are equal
  : @example test/Queries/excel/statistical/priority2/slope1.xq
 :)
@@ -886,20 +886,20 @@ declare function excel:slope($known_y as xs:anyAtomicType+,
                        $known_x as xs:anyAtomicType+) as xs:anyAtomicType
 {
   if (fn:empty($known_y) or fn:empty($known_x)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Slope function: known_x and known_y cannot be empty sequences")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Slope function: known_x and known_y cannot be empty sequences")
   else
   let $x_average := excel:average($known_x) 
   let $y_average := excel:average($known_y) 
   let $xsq_dev := excel:sumsq-deviations($known_x, $x_average) return
   if ($xsq_dev = 0) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Div0"), "Slope function: all x's are equal")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Div0"), "Slope function: all x's are equal")
   else
   let $x_y_dev := excel:sum-x-y-deviations($known_x, $x_average, $known_y, $y_average) return
   $x_y_dev div $xsq_dev
 };
 
 (:~
- : Returns a normalized value from a distribution characterized by mean and standard_dev.<br/>
+ : Returns a normalized value from a distribution characterized by mean and standard_dev.<p/>
  : The formula is (x - mean) / standard_dev .
  :
  : @see http://office.microsoft.com/en-us/excel/HP052092731033.aspx
@@ -916,7 +916,7 @@ declare function excel:standardize($x as xs:anyAtomicType,
                                    $standard_dev as xs:anyAtomicType) as xs:double
 {
   if ($standard_dev le 0) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Standardize function: standard_dev must be positive ", $standard_dev)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Standardize function: standard_dev must be positive ", $standard_dev)
   else
     (excel-math:cast-as-numeric($x) - excel-math:cast-as-numeric($mean)) div excel-math:cast-as-numeric($standard_dev)
 };

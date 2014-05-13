@@ -27,11 +27,11 @@ xquery version "3.0";
  : @project Zorba/Excel/Math
  :
  :)
-module namespace  excel = "http://www.zorba-xquery.com/modules/excel/math" ;
+module namespace  excel = "http://zorba.io/modules/excel/math" ;
 
-declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://zorba.io/modules/excel/errors";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "1.0";
 
 (:~
@@ -43,7 +43,7 @@ declare option ver:module-version "1.0";
  :)
 declare function excel:is-a-number($value as xs:anyAtomicType) as xs:boolean 
 {   
-  fn:string(fn:number($value)) ne 'NaN' 
+  fn:string(fn:number($value)) ne 'NaN'
 };
 
 (:~
@@ -70,7 +70,7 @@ declare function excel:cast-as-numeric($number as xs:anyAtomicType) as xs:anyAto
       else if ($number castable as xs:double) then
         xs:double($number)
       else
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value is not a number", $number)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value is not a number", $number)
 };
 
 (: ---------------- Excel Math functions ----------------------- :)
@@ -123,11 +123,11 @@ declare function excel:ceiling(
   let $sig := excel:cast-as-numeric($significance)
   return
     if ($sig eq 0) then
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Ceiling function does not accept significance 0")
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Ceiling function does not accept significance 0")
     else if ($num * $sig ge 0) then
 	    fn:ceiling($num div $sig) * $sig
     else
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Ceiling function: both arguments must have the same sign")
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Ceiling function: both arguments must have the same sign")
 };
 
 (:~
@@ -200,7 +200,7 @@ declare function excel:fact($number as xs:anyAtomicType) as xs:integer
       1
     else
       if ($num lt 0) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Fact function does not accept numbers less than zero")
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Fact function does not accept numbers less than zero")
       else
         excel:fact-integer(xs:integer($num))
 };
@@ -229,11 +229,11 @@ declare function excel:floor(
   let $sig := excel:cast-as-numeric($significance)
   return
     if ($sig eq 0) then
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Floor function does not accept significance 0")
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Floor function does not accept significance 0")
     else if ($num * $sig ge 0) then
       fn:floor($num div $sig) * $sig
     else
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Floor function: both arguments must have the same sign")
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Floor function: both arguments must have the same sign")
 };
  
 (:~
@@ -277,7 +277,7 @@ declare function excel:mod(
   let $num := excel:cast-as-numeric($number)
   let $div := excel:cast-as-numeric($divisor) return
     if ($div eq 0) then
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Div0"), "Mod operator: divide by 0")
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Div0"), "Mod operator: divide by 0")
     else
       let $result := $num mod $div
       return
@@ -351,7 +351,7 @@ declare function excel:power(
   let $num := excel:cast-as-numeric($number)
   return
     if ($power lt 0) then
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Power function: power must be greater or equal than zero")
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Power function: power must be greater or equal than zero")
     else if ($power eq 0) then
       1
     else if ($power = 1) then
@@ -425,7 +425,7 @@ declare function excel:quotient(
   let $denom := excel:cast-as-numeric($denominator)
   return
     if ($denom eq 0) then
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Div0"), "Quotient function: divide by 0")
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Div0"), "Quotient function: divide by 0")
     else
       xs:integer($numer div $denom)
 };
@@ -631,7 +631,7 @@ declare function excel:trunc(
 };
  
 (:~
- : Helper function.<br/>
+ : Helper function.<p/>
  : Sorts a sequence of numbers or arguments castable to numeric.
  : It first casts all arguments to numeric and then sorts ascending.
  :  
@@ -677,7 +677,7 @@ declare function excel:degrees($radian as xs:double) as xs:integer
 declare function excel:factdouble($number as xs:integer) as xs:integer
 {
   if ($number lt 0) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Factdouble function: number should be greater than zero or equal")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Factdouble function: number should be greater than zero or equal")
   else if ($number eq 1) then
     1
   else if ($number eq 2) then
@@ -789,7 +789,7 @@ declare function excel:gcd($numbers as xs:integer+) as xs:integer
     let $minval := excel:min-without-zero($numbers)
     return
       if ($minval lt 0) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "gcd function: numbers should be greater than zero or equal")
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "gcd function: numbers should be greater than zero or equal")
       else if ($minval eq 0) then
         0
       else 
@@ -797,8 +797,8 @@ declare function excel:gcd($numbers as xs:integer+) as xs:integer
 };
 
 (:~
- : Returns the least common multiple of integers.<br/>
- : LCM for two numbers is computed by multiplying them and dividing with GCD. <br/>
+ : Returns the least common multiple of integers.<p/>
+ : LCM for two numbers is computed by multiplying them and dividing with GCD. <p/>
  : The function is applied recursively replacing the first two numbers in the sequence with their LCM.
  : 
  : @see http://office.microsoft.com/en-us/excel/HP052091521033.aspx
@@ -879,9 +879,9 @@ declare function excel:radians($degree as xs:integer) as xs:decimal
 
 (:~
  : Converts an arabic numeral to roman, as text.
- : Only the clasic format is supported (out of all formats Excel requires).<br/>
+ : Only the clasic format is supported (out of all formats Excel requires).<p/>
  : M is the largest digit, it represents 1000.
- : Numbers bigger than 2000 will be represented by a sequence of "M".<br/>
+ : Numbers bigger than 2000 will be represented by a sequence of "M".<p/>
  : D = 500, C = 100, L = 50, X = 10, V = 5, I = 1.
  : 
  : @see http://office.microsoft.com/en-us/excel/HP052092381033.aspx
@@ -895,7 +895,7 @@ declare function excel:radians($degree as xs:integer) as xs:decimal
 declare function excel:roman($number as xs:integer) as xs:string
 {
   if ($number lt 0) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Roman function: number should be greater than zero or equal")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Roman function: number should be greater than zero or equal")
   else if ($number ge 1000) then
     fn:concat("M", excel:roman($number - 1000))
   else if ($number ge 900) then

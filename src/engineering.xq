@@ -27,21 +27,21 @@ xquery version "3.0";
  :
  : @project Zorba/Excel/Engineering
  :)
-module namespace  excel-engineering = "http://www.zorba-xquery.com/modules/excel/engineering" ;
+module namespace  excel-engineering = "http://zorba.io/modules/excel/engineering" ;
 
-declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://zorba.io/modules/excel/errors";
 
 (:~
  : Import excel-text module functions.
  :)
-import module namespace excel-text="http://www.zorba-xquery.com/modules/excel/text";
+import module namespace excel-text="http://zorba.io/modules/excel/text";
 
 (:~
  : Import excel-math module functions.
  :)
-import module namespace excel-math="http://www.zorba-xquery.com/modules/excel/math";
+import module namespace excel-math="http://zorba.io/modules/excel/math";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "1.0";
 
 (:~
@@ -101,7 +101,7 @@ declare %private function excel-engineering:dec2hexUtil
     ($number as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($number))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $number)
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $number)
     else
       let $tmpNumber := xs:integer($number) 
 
@@ -124,7 +124,7 @@ declare %private function excel-engineering:dec2octUtil
     ($number as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($number))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $number)
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $number)
     else
       let $tmpNumber := xs:integer($number) 
 
@@ -147,7 +147,7 @@ declare %private function excel-engineering:dec2binUtil
     ($arg as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else
       let $tmpNumber := xs:integer($arg) 
 
@@ -173,7 +173,7 @@ declare %private function excel-engineering:hex2decUtil
     let $hexCP := (48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 65, 66, 67, 68, 69, 70)
 
     return if (fn:not(excel-engineering:is-hex($number))) then
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not a hexadecimal representation of a number", $number)
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided string is not a hexadecimal representation of a number", $number)
     else
       let $tmp := fn:reverse(fn:string-to-codepoints($number))
       return  fn:sum(for $val in (0 to fn:string-length($number)-1)
@@ -191,7 +191,7 @@ declare %private function excel-engineering:oct2decUtil
     ($arg as xs:string) as xs:integer {
 
     if (fn:not(excel-engineering:is-oct($arg))) then
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not an octal representation of a number", $arg)
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided string is not an octal representation of a number", $arg)
     else
       let $tmp := fn:reverse(fn:string-to-codepoints($arg))
       return fn:sum(for $val in (0 to fn:string-length($arg)-1)
@@ -209,7 +209,7 @@ declare %private function excel-engineering:bin2decUtil
     ($arg as xs:string) as xs:integer {
 
     if (fn:not(excel-engineering:is-bin($arg))) then
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not a binary representation of a number", $arg)
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided string is not a binary representation of a number", $arg)
     else
       let $tmp := fn:reverse(fn:string-to-codepoints($arg))
       return fn:sum(for $val in (0 to fn:string-length($arg)-1)
@@ -229,13 +229,13 @@ declare function excel-engineering:dec2hex
     ($arg as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else
       let $tmpNumber := xs:integer($arg) 
 
       return
       if(($tmpNumber < -549755813888) or ($tmpNumber > 549755813887)) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -549755813888 or bigger than 549755813887", $tmpNumber)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -549755813888 or bigger than 549755813887", $tmpNumber)
       else if($tmpNumber < 0) then
           let $tmp := 1 + excel-engineering:hex2decUtil(fn:translate(
                       excel-text:pad-integer-to-length(excel-engineering:dec2hexUtil(fn:abs($tmpNumber)), "0", 10),
@@ -264,18 +264,18 @@ declare function excel-engineering:dec2hex
      $places as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else if(fn:not(excel-math:is-a-number($places))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'places' is not numeric", $places) 
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value for 'places' is not numeric", $places) 
     else
       let $tmpNumber := xs:integer($arg) 
       let $tmpPlaces := xs:integer($places)
 
       return
         if(($tmpNumber < -549755813888) or ($tmpNumber > 549755813887)) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -549755813888 or bigger than 549755813887", $tmpNumber) 
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -549755813888 or bigger than 549755813887", $tmpNumber) 
         else if($tmpPlaces < 1) then
-          fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' is zero or negative", $tmpPlaces)
+          fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' is zero or negative", $tmpPlaces)
         else
           if($tmpNumber < 0) then
             let $tmp := 1 + excel-engineering:hex2decUtil(fn:translate(
@@ -286,7 +286,7 @@ declare function excel-engineering:dec2hex
           else
             let $tmp := excel-engineering:dec2hexUtil($tmpNumber)
             return if($tmpPlaces < fn:string-length($tmp)) then
-              fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' too small", $tmpPlaces)
+              fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' too small", $tmpPlaces)
             else
               excel-text:pad-integer-to-length($tmp, "0", $tmpPlaces)
 };
@@ -304,13 +304,13 @@ declare function excel-engineering:dec2oct
     ($arg as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else
       let $tmpNumber := xs:integer($arg) 
 
       return
       if(($tmpNumber < -536870912) or ($tmpNumber > 536870911)) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -536870912 or bigger than 536870911", $tmpNumber)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -536870912 or bigger than 536870911", $tmpNumber)
       else if($tmpNumber < 0) then
           let $tmp := 1 + excel-engineering:oct2decUtil(fn:translate(
                       excel-text:pad-integer-to-length(excel-engineering:dec2octUtil(fn:abs($tmpNumber)), "0", 10), 
@@ -339,18 +339,18 @@ declare function excel-engineering:dec2oct
      $places as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else if(fn:not(excel-math:is-a-number($places))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'places' is not numeric", $places)
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value for 'places' is not numeric", $places)
     else
       let $tmpNumber := xs:integer($arg) 
       let $tmpPlaces := xs:integer($places)
 
       return
         if(($tmpNumber < -536870912) or ($tmpNumber > 536870911)) then
-          fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -536870912 or bigger than 536870911", $tmpNumber)
+          fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -536870912 or bigger than 536870911", $tmpNumber)
         else if($tmpPlaces < 1) then
-          fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' is zero or negative", $tmpPlaces)
+          fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' is zero or negative", $tmpPlaces)
         else
           if($tmpNumber < 0) then
             let $tmp := 1 + excel-engineering:oct2decUtil(fn:translate(
@@ -361,7 +361,7 @@ declare function excel-engineering:dec2oct
           else
             let $tmp := excel-engineering:dec2octUtil($tmpNumber)
             return if($tmpPlaces < fn:string-length($tmp)) then
-              fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' too small", $tmpPlaces)
+              fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' too small", $tmpPlaces)
             else
               excel-text:pad-integer-to-length($tmp, "0", $tmpPlaces)
 };
@@ -379,13 +379,13 @@ declare function excel-engineering:dec2bin
     ($arg as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value for 'number' is not numeric", $arg)
     else
       let $tmpNumber := xs:integer($arg) 
 
       return
       if(($tmpNumber < -512) or ($tmpNumber > 511)) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -512 or bigger than 511", $tmpNumber)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -512 or bigger than 511", $tmpNumber)
       else
         if($tmpNumber < 0) then
           let $tmp := 1 + excel-engineering:bin2decUtil(fn:translate(
@@ -415,18 +415,18 @@ declare function excel-engineering:dec2bin
      $places as xs:anyAtomicType) as xs:string {
 
     if (fn:not(excel-math:is-a-number($arg))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"),"Provided value for 'number' is not numeric", $arg)
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"),"Provided value for 'number' is not numeric", $arg)
     else if(fn:not(excel-math:is-a-number($places))) then
-       fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value for 'places' is not numeric", $places)
+       fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value for 'places' is not numeric", $places)
     else
       let $tmpNumber := xs:integer($arg) 
       let $tmpPlaces := xs:integer($places)
 
       return
       if(($tmpNumber < -512) or ($tmpNumber > 511)) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -512 or bigger than 511", $tmpNumber)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'number' is smaller than -512 or bigger than 511", $tmpNumber)
       else if($tmpPlaces < 1) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' is zero or negative", $tmpPlaces)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' is zero or negative", $tmpPlaces)
       else
         if($tmpNumber < 0) then
           let $tmp := 1 + excel-engineering:bin2decUtil(fn:translate(
@@ -437,7 +437,7 @@ declare function excel-engineering:dec2bin
         else
           let $tmp := excel-engineering:dec2binUtil($tmpNumber)
           return if($tmpPlaces < fn:string-length($tmp)) then
-            fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' too small", $tmpPlaces)
+            fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Provided value for 'places' too small", $tmpPlaces)
           else
             excel-text:pad-integer-to-length($tmp, "0", $tmpPlaces)
 };
@@ -491,9 +491,9 @@ declare function excel-engineering:oct2dec
 
   let $number := fn:string($arg)
   return if (fn:not(excel-engineering:is-oct($number))) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not an octal representation of a number", $number)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided string is not an octal representation of a number", $number)
   else if(fn:string-length($number) > 10) then 
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Number contains more than 10 characters", $number)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Number contains more than 10 characters", $number)
   else
     if((fn:string-length($number) eq 10) and
               fn:substring($number, 1, 1) eq "7") then
@@ -516,9 +516,9 @@ declare function excel-engineering:bin2dec
 
   let $number := fn:string($arg)
   return if (fn:not(excel-engineering:is-bin($number))) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not a binary representation of a number", $number)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided string is not a binary representation of a number", $number)
   else if(fn:string-length($number) > 10) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Number contains more than 10 characters", $number)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Number contains more than 10 characters", $number)
   else
     if((fn:string-length($number) eq 10) and
        (fn:substring($number, 1, 1) eq "1")) then
@@ -646,9 +646,9 @@ declare function excel-engineering:hex2dec
 
   let $number := fn:upper-case($arg)
   return if (fn:not(excel-engineering:is-hex($number))) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided string is not a hexadecimal representation of a number", $arg)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided string is not a hexadecimal representation of a number", $arg)
   else if(fn:string-length($number) > 10) then 
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Number contains more than 10 characters", $arg)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Number contains more than 10 characters", $arg)
   else   
     if((fn:string-length($number) eq 10) and
         fn:substring($number, 1, 1) eq "F") then

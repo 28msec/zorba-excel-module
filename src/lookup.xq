@@ -26,15 +26,15 @@ xquery version "3.0";
  : @project Zorba/Excel/Lookup
  :
  :)
-module namespace  excel = "http://www.zorba-xquery.com/modules/excel/lookup" ;
+module namespace  excel = "http://zorba.io/modules/excel/lookup" ;
 
-declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://zorba.io/modules/excel/errors";
 (:~
  : Use excel-math module functions.
  :)
-import module namespace excel-math="http://www.zorba-xquery.com/modules/excel/math";
+import module namespace excel-math="http://zorba.io/modules/excel/math";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "1.0";
 
 (:~
@@ -52,7 +52,7 @@ declare function excel:choose(
   $values as xs:anyAtomicType*) as xs:anyAtomicType
 {
   if ($index_num lt 1 or $index_num gt fn:count($values)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Choose function: index_num should be between 1 and value count ", $index_num)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Choose function: index_num should be between 1 and value count ", $index_num)
   else
     $values[$index_num]
 };
@@ -129,7 +129,7 @@ declare function excel:choose(
   $value_sequence29 as xs:anyAtomicType*) as xs:anyAtomicType*
 {
   if ($index_num lt 1 or $index_num gt 29) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Choose function: index_num should be between 1 and 29 ", $index_num)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Choose function: index_num should be between 1 and 29 ", $index_num)
   else if ($index_num = 1) then
     $value_sequence1
   else if ($index_num = 2) then
@@ -189,7 +189,7 @@ declare function excel:choose(
   else if ($index_num eq 29) then
     $value_sequence29
   else
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Choose function: index_num should be between 1 and 29 ", $index_num)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Choose function: index_num should be between 1 and 29 ", $index_num)
 };
  
 (:~
@@ -231,7 +231,7 @@ declare %private function excel:lookup-column(
     if ($range_lookup != 0) then
       $last_comparable_pos
     else
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Hlookup function: cannot find lookup value ", $lookup_value)
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Hlookup function: cannot find lookup value ", $lookup_value)
   else if ($range_lookup gt 0) then
     if ($lookup_value instance of xs:boolean) then
       if ($table_header[1] instance of xs:boolean) then
@@ -322,13 +322,13 @@ declare %private function excel:lookup-column(
  : <dt>table_array</dt> <dd>is a sequence of elements, first row first, then second row and so on</dd>
  : <dt>table_width</dt> <dd>specifies the number of elements in a row</dd>
  : <dt>table_height</dt> <dd>specifies the number of rows</dd></dl>
- : The number of elements in table_array must be equal or more than table_width * table_height.<br/>
+ : The number of elements in table_array must be equal or more than table_width * table_height.<p/>
  : 
  : For wildchar matching, the XQuery regex matcher is used.
  :
  : @see http://office.microsoft.com/en-us/excel/HP052091141033.aspx
  : @param $lookup_value the value to be searched. 
- :       Allowed types are numeric, string, boolean. <br/>
+ :       Allowed types are numeric, string, boolean. <p/>
  :       Boolean values are compared only with booleans.
  :       Numbers are compared only with numbers, if range_lookup is not zero.
  :       The other types are converted to string and compared to string value of all values.
@@ -362,9 +362,9 @@ declare function excel:hlookup(
   $range_lookup   as xs:boolean) as xs:anyAtomicType
 {
   if ($table_height * $table_width gt fn:count($table_array)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Hlookup function: table array width and height not specified correctly ", $table_width * 1000 + $table_height)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Hlookup function: table array width and height not specified correctly ", $table_width * 1000 + $table_height)
   else if ($row_index_num lt 1 or $row_index_num gt $table_height) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Hlookup function: row_index_num must be between 1 and table height ", $row_index_num)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Hlookup function: row_index_num must be between 1 and table height ", $row_index_num)
   else
     let $table_header := (
         for $i in (1 to $table_width)
@@ -374,9 +374,9 @@ declare function excel:hlookup(
     let $column := excel:lookup-column($lookup_value, $table_header, $range_lookup cast as xs:integer, 0, 0)
     return
       if ($column eq 0) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Hlookup function: lookup value is smaller than the first element in header", $lookup_value)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Hlookup function: lookup value is smaller than the first element in header", $lookup_value)
       else if ($column gt $table_width) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Hlookup function: column found outside table array ", $column)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Hlookup function: column found outside table array ", $column)
       else
         $table_array[($row_index_num - 1) * $table_width + $column]
 };
@@ -387,7 +387,7 @@ declare function excel:hlookup(
  :   and the first row must be ordered ascending. 
  : @see http://office.microsoft.com/en-us/excel/HP052091141033.aspx
  : @param $lookup_value the value to be searched. 
- :       Allowed types are numeric, string, boolean. <br/>
+ :       Allowed types are numeric, string, boolean. <p/>
  :       Boolean values are compared only with booleans.
  :       Numbers are compared only with numbers, if range_lookup is not zero.
  :       The other types are converted to string and compared to string value of all values.
@@ -414,8 +414,8 @@ declare function excel:hlookup(
 };
 
 (:~
- : Returns a value from within an array.<br/>
- : This is the Array form of the Excel Index function.<br/>
+ : Returns a value from within an array.<p/>
+ : This is the Array form of the Excel Index function.<p/>
  : 
  : <dl>Array is specified with 3 parameters:
  : <dt>array</dt> <dd>is a sequence of elements, first row first, then second row and so on</dd>
@@ -446,25 +446,25 @@ declare function excel:index(
   $column_num   as xs:integer) as xs:anyAtomicType+
 {
   if ($array_height * $array_width != fn:count($array)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Index function: array width and height not specified correctly ", $array_width * 1000 + $array_height)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Index function: array width and height not specified correctly ", $array_width * 1000 + $array_height)
   else
   if ($row_num < 0 or $row_num > $array_height) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Ref"), "Index function: row_num must be between 1 and array height or 0", $row_num)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Ref"), "Index function: row_num must be between 1 and array height or 0", $row_num)
   else
   if ($column_num < 0 or $column_num > $array_width) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Ref"), "Index function: column_num must be between 1 and array width or 0", $column_num)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Ref"), "Index function: column_num must be between 1 and array width or 0", $column_num)
   else
   if ($array_height = 1) then
     if ($column_num ge 1) then
       $array[$column_num]
     else
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Ref"), "Index function: column_num must be between 1 and array width", $column_num)
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Ref"), "Index function: column_num must be between 1 and array width", $column_num)
   else
   if ($array_width = 1) then
     if ($row_num ge 1) then
       $array[$row_num]
     else
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Ref"), "Index function: row_num must be between 1 and array width", $row_num)
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Ref"), "Index function: row_num must be between 1 and array width", $row_num)
   else
   if ($row_num > 0 and $column_num > 0) then
     $array[($row_num - 1) * $array_width + $column_num]
@@ -478,7 +478,7 @@ declare function excel:index(
 };
 
 (:~
- : The Vector form. <br/>
+ : The Vector form. <p/>
  : Looks in a sequence for a value 
  :   and return a value from the same position in a second sequence.
  : If the value is not found, then it matches the largest value in lookup_vector 
@@ -503,21 +503,21 @@ declare function excel:lookup(
 {
   let $pos := excel:lookup-column($lookup_value, $lookup_vector, 1, 0, 0) return
   if ($pos eq 0) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Lookup function: lookup value is smaller than any vector values ", $lookup_value)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Lookup function: lookup value is smaller than any vector values ", $lookup_value)
   else if ($pos gt fn:count($result_vector)) then    
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Lookup function: lookup position is outside the result range ", $pos)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Lookup function: lookup position is outside the result range ", $pos)
   else
     $result_vector[$pos]
 };
 
 (:~
- : The Array form.<br/>
+ : The Array form.<p/>
  : It looks in the first row or column of an array for the specified value 
- :   and returns a value from the same position in the last row or column of the array.<br/>
+ :   and returns a value from the same position in the last row or column of the array.<p/>
  : If array covers an area that is wider than it is tall (more columns than rows), 
- :   LOOKUP searches for lookup_value in the first row.<br/>
+ :   LOOKUP searches for lookup_value in the first row.<p/>
  : If array is square or is taller than it is wide (more rows than columns), 
- :   LOOKUP searches in the first column.<br/>
+ :   LOOKUP searches in the first column.<p/>
  : 
  : The values in the first row or first column must be in ascending order.
  : 
@@ -543,7 +543,7 @@ declare function excel:lookup(
   $array_height as xs:integer) as xs:anyAtomicType
 {
   if ($array_height * $array_width ne fn:count($array) or $array_height eq 0 or $array_width eq 0) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Lookup function: array width and height not specified correctly ", $array_width * 1000 + $array_height)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Lookup function: array width and height not specified correctly ", $array_width * 1000 + $array_height)
   else if ($array_width gt $array_height) then
     let $header := (
         for $i in (1 to $array_width)
@@ -553,7 +553,7 @@ declare function excel:lookup(
     let $pos := excel:lookup-column($lookup_value, $header, 1, 0, 0)
     return
       if ($pos eq 0) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Lookup function: lookup value is smaller than any vector values in the first row ", $lookup_value)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Lookup function: lookup value is smaller than any vector values in the first row ", $lookup_value)
       else
         $array[($array_height - 1) * $array_width + $pos]
   else
@@ -565,7 +565,7 @@ declare function excel:lookup(
     let $pos := excel:lookup-column($lookup_value, $header, 1, 0, 0)
     return
       if ($pos eq 0) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Lookup function: lookup value is smaller than any vector values in the first column ", $lookup_value)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Lookup function: lookup value is smaller than any vector values in the first column ", $lookup_value)
       else
         $array[($pos - 1) * $array_width + $array_width]
 };
@@ -582,12 +582,12 @@ declare function excel:lookup(
  :       Possible values:
  :       <dt>1</dt>  <dd> finds the largest value that is less than or equal to lookup_value.
  :               Sequence must be in ascending order.</dd>
- :       <dt>0</dt>  <dd> finds the first value that is exactly equal to lookup_value. <br/>
- :               Sequence can be in any order.<br/>
- :               If lookup_value is boolean, then only booleans are compared.<br/>
+ :       <dt>0</dt>  <dd> finds the first value that is exactly equal to lookup_value. <p/>
+ :               Sequence can be in any order.<p/>
+ :               If lookup_value is boolean, then only booleans are compared.<p/>
  :               For other types, they are casted to string and then compared using 
  :               xquery regular expressions. Lookup_value can be a xquery regular expression.</dd>
- :       <dt>-1</dt> <dd> finds the smallest value that is greater than or equal to lookup_value.<br/>
+ :       <dt>-1</dt> <dd> finds the smallest value that is greater than or equal to lookup_value.<p/>
  :               Sequence must be in descending order.</dd></dl>
  : @return The position of found value
  : @error excel-err:NA for match_type 1 or -1, the lookup_value is smaller or larger than
@@ -604,7 +604,7 @@ declare function excel:match(
   let $pos := excel:lookup-column($lookup_value, $sequence, $match_type, 0, 0)
   return
     if ($pos eq 0) then
-      fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Match function: cannot match lookup value ", $lookup_value)
+      fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Match function: cannot match lookup value ", $lookup_value)
     else
       $pos  
 };
@@ -663,14 +663,14 @@ declare function excel:offset(
   $width            as xs:integer) as xs:anyAtomicType*
 {
   if ($rows lt 0 or $cols lt 0) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Offset function: rows and cols must be positive or zero ", $rows * 1000 + $cols)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Offset function: rows and cols must be positive or zero ", $rows * 1000 + $cols)
   else if ($height lt 1 or $width lt 1) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Offset function: height and width must be greater than zero", $height * 1000 + $width)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Offset function: height and width must be greater than zero", $height * 1000 + $width)
   else if (($reference_height * $reference_width) gt fn:count($reference)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Offset function: reference width and height not specified correctly ", $reference_width * 1000 + $reference_height)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Offset function: reference width and height not specified correctly ", $reference_width * 1000 + $reference_height)
   else if (($rows + $height) gt $reference_height or
       ($cols + $width) gt $reference_width) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "Offset function: inner array is outside the reference array")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "Offset function: inner array is outside the reference array")
   else
     for $i in (1 to $height)
     return
@@ -732,7 +732,7 @@ declare function excel:transpose(
   $array_height as xs:integer) as xs:anyAtomicType+
 {
   if (($array_height * $array_width) gt fn:count($array)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Transpose function: array width and height not specified correctly ", $array_width * 1000 + $array_height)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Transpose function: array width and height not specified correctly ", $array_width * 1000 + $array_height)
   else
     for $c in (1 to $array_width)
     return
@@ -754,7 +754,7 @@ declare function excel:transpose(
  :  
  : @see http://office.microsoft.com/en-us/excel/HP052093351033.aspx
  : @param $lookup_value the value to be searched. 
- :       Allowed types are numeric, string, boolean. <br/>
+ :       Allowed types are numeric, string, boolean. <p/>
  :       Boolean values are compared only with booleans.
  :       Numbers are compared only with numbers, if range_lookup is not zero.
  :       The other types are converted to string and compared to string value of all values.
@@ -784,9 +784,9 @@ declare function excel:vlookup(
   $range_lookup   as xs:boolean) as xs:anyAtomicType
 {
   if ($table_height * $table_width gt fn:count($table_array)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Vlookup function: table array width and height not specified correctly ", $table_width * 1000 + $table_height)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Vlookup function: table array width and height not specified correctly ", $table_width * 1000 + $table_height)
   else if ($col_index_num lt 1 or $col_index_num gt $table_width) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Vlookup function: col_index_num must be between 1 and table width ", $col_index_num)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Vlookup function: col_index_num must be between 1 and table width ", $col_index_num)
   else
     let $table_header := (
         for $i in (1 to $table_height)
@@ -796,9 +796,9 @@ declare function excel:vlookup(
     let $row := excel:lookup-column($lookup_value, $table_header, $range_lookup cast as xs:integer, 0, 0)
     return
       if ($row eq 0) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Vlookup function: lookup value cannot be matched", $lookup_value)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Vlookup function: lookup value cannot be matched", $lookup_value)
       else if ($row gt $table_height) then
-        fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Vlookup function: row found outside table array ", $row)
+        fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Vlookup function: row found outside table array ", $row)
       else
         $table_array[($row - 1) * $table_width + $col_index_num]
 };
@@ -810,7 +810,7 @@ declare function excel:vlookup(
  :  
  : @see http://office.microsoft.com/en-us/excel/HP052093351033.aspx
  : @param $lookup_value the value to be searched. 
- :       Allowed types are numeric, string, boolean. <br/>
+ :       Allowed types are numeric, string, boolean. <p/>
  :       Boolean values are compared only with booleans.
  :       Numbers are compared only with numbers, if range_lookup is not zero.
  :       The other types are converted to string and compared to string value of all values.

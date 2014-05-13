@@ -1,5 +1,5 @@
 import module namespace
-excel="http://www.zorba-xquery.com/modules/excel/lookup";
+excel="http://zorba.io/modules/excel/lookup";
 
 excel:hlookup(".3", (("21", "22", "23"),
                   (4, 5, 6),

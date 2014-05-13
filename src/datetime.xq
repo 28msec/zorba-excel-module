@@ -27,16 +27,16 @@ xquery version "3.0";
  : @project Zorba/Excel/Datetime
  :
  :)
-module namespace  excel-datetime = "http://www.zorba-xquery.com/modules/excel/datetime" ;
+module namespace  excel-datetime = "http://zorba.io/modules/excel/datetime" ;
 
-declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://zorba.io/modules/excel/errors";
 
 (:~
  : Import excel-text module functions.
  :)
-import module namespace excel-text = "http://www.zorba-xquery.com/modules/excel/text";
+import module namespace excel-text = "http://zorba.io/modules/excel/text";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "1.0";
 
 (:~
@@ -75,9 +75,9 @@ declare %private function excel-datetime:is-leap-year
  : @see http://office.microsoft.com/en-us/excel/HP052090471033.aspx 
  : @param $start_date the start date.
  : @param $end_date the end date.
- : @return The number of days between two dates based on a 360-day year (twelve 30-day months), which is used in some accounting calculations.<br/> 
- : Use this function to help compute payments if your accounting system is based on twelve 30-day months.<br/> 
- : The metod used is U.S. (NASD). If the starting date is the last day of a month, it becomes equal to the 30th of the same month. <br/> 
+ : @return The number of days between two dates based on a 360-day year (twelve 30-day months), which is used in some accounting calculations.<p/> 
+ : Use this function to help compute payments if your accounting system is based on twelve 30-day months.<p/> 
+ : The metod used is U.S. (NASD). If the starting date is the last day of a month, it becomes equal to the 30th of the same month. <p/> 
  : If the ending date is the last day of a month and the starting date is earlier than the 30th of a month, the ending date becomes equal to the 1st of the next month; otherwise the ending date becomes equal to the 30th of the same month.
  :) 
 declare function excel-datetime:days360
@@ -95,14 +95,14 @@ declare function excel-datetime:days360
  : @param $end_date the end date.
  : @param $method if false then US/NASD Method is used, otherwise the European Method is used.
  : @return The number of days between two dates based on a 360-day year (twelve 30-day months), which is used in some accounting calculations. 
- : Use this function to help compute payments if your accounting system is based on twelve 30-day months. <br />
- :The European Method (30E/360)<br />
- : - If either date A or B falls on the 31st of the month, that date will be changed to the 30th;<br />
- : - Where date B falls on the last day of February, the actual date B will be used.<br /><br />
+ : Use this function to help compute payments if your accounting system is based on twelve 30-day months. <p/>
+ :The European Method (30E/360)<p/>
+ : - If either date A or B falls on the 31st of the month, that date will be changed to the 30th;<p/>
+ : - Where date B falls on the last day of February, the actual date B will be used.<p/>
  :
- :The US/NASD Method (30US/360)<br />
- : - If both date A and B fall on the last day of February, then date B will be changed to the 30th.<br />
- : - If date A falls on the 31st of a month or last day of February, then date A will be changed to the 30th.<br />
+ :The US/NASD Method (30US/360)<p/>
+ : - If both date A and B fall on the last day of February, then date B will be changed to the 30th.<p/>
+ : - If date A falls on the 31st of a month or last day of February, then date A will be changed to the 30th.<p/>
  : - If date A falls on the 30th of a month after applying (2) above and date B falls on the 31st of a month, then date B will be changed to the 30th.
  :)  
 declare function excel-datetime:days360
@@ -327,7 +327,7 @@ declare function excel-datetime:weekday
     if(excel-datetime:day-of-week($date) eq 0) then 6
     else excel-datetime:day-of-week($date) - 1
   else
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided number must be in range [1,3]", $return_type)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided number must be in range [1,3]", $return_type)
 };
 
 (:~
@@ -336,8 +336,8 @@ declare function excel-datetime:weekday
  : @see http://office.microsoft.com/en-us/excel/HP052091901033.aspx
  : @param $start_date the start date.
  : @param $end_date the end date.
- : @return The number of whole working days between start_date and end_date.<br/>
- : Working days exclude weekends and any dates identified in holidays.<br/>
+ : @return The number of whole working days between start_date and end_date.<p/>
+ : Working days exclude weekends and any dates identified in holidays.<p/>
  : Use NETWORKDAYS to calculate employee benefits that accrue based on the number of days worked during a specific term. 
  :)  
 declare function excel-datetime:networkdays
@@ -354,8 +354,8 @@ declare function excel-datetime:networkdays
  : @param $start_date the start date.
  : @param $end_date the end date.
  : @param $holidays one or more dates to exclude from the working calendar, such as state and federal holidays and floating holidays.
- : @return The number of whole working days between start_date and end_date.<br/> 
- : Working days exclude weekends and any dates identified in holidays.<br/>
+ : @return The number of whole working days between start_date and end_date.<p/> 
+ : Working days exclude weekends and any dates identified in holidays.<p/>
  : Use NETWORKDAYS to calculate employee benefits that accrue based on the number of days worked during a specific term.
  :)  
 declare function excel-datetime:networkdays

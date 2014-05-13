@@ -29,16 +29,16 @@ xquery version "3.0";
  : @project Zorba/Excel/Math Sumproduct
  :
  :)
-module namespace  excel = "http://www.zorba-xquery.com/modules/excel/math-sumproduct";
+module namespace  excel = "http://zorba.io/modules/excel/math-sumproduct";
 
 (:~
  : Import excel-math module functions.
 :)
-import module namespace excel-math = "http://www.zorba-xquery.com/modules/excel/math";
+import module namespace excel-math = "http://zorba.io/modules/excel/math";
 
-declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://zorba.io/modules/excel/errors";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "1.0";
 
 

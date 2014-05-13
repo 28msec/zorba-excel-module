@@ -27,16 +27,16 @@ xquery version "3.0";
  :
  : @project Zorba/Excel/Information
  :)
-module namespace  excel-information = "http://www.zorba-xquery.com/modules/excel/information" ;
+module namespace  excel-information = "http://zorba.io/modules/excel/information" ;
 
-declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://zorba.io/modules/excel/errors";
 
 (:~
  : Import excel-math module functions.
  :)
-import module namespace excel-math = "http://www.zorba-xquery.com/modules/excel/math";
+import module namespace excel-math = "http://zorba.io/modules/excel/math";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "1.0";
 
 
@@ -66,7 +66,7 @@ declare function excel-information:is-even
  if(excel-math:is-a-number($value)) then
   fn:not(fn:boolean(fn:floor(fn:abs(fn:number($value))) mod 2))
  else
-  fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value is not a number", $value)
+  fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value is not a number", $value)
  };
 
 (:~
@@ -83,7 +83,7 @@ declare function excel-information:is-odd
  if(excel-math:is-a-number($value)) then
   fn:boolean(fn:floor(fn:abs(fn:number($value))) mod 2)
  else
-  fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided value is not a number", $value)
+  fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided value is not a number", $value)
  };
 
 (:~
@@ -156,5 +156,5 @@ declare function excel-information:n
 declare function excel-information:na
   ()  as xs:anyAtomicType {
 
-  fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:NA"), "No value is available")
+  fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:NA"), "No value is available")
  };

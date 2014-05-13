@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.0";
 
 (:
  : Copyright 2006-2009 The FLWOR Foundation.
@@ -29,11 +29,11 @@ xquery version "1.0";
  :)
 (:  for False,Not and True use fn:false(), fn:not(), fn:true() :)
 
-module namespace  excel-logical = "http://www.zorba-xquery.com/modules/excel/logical" ;
+module namespace  excel-logical = "http://zorba.io/modules/excel/logical" ;
 
-declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://zorba.io/modules/excel/errors";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "1.0";
 
 (:~
@@ -63,7 +63,7 @@ declare function excel-logical:and
   let $distValues := distinct-values($values)
   return
   if(fn:empty($distValues)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided sequence is empty", $values)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided sequence is empty", $values)
   else
     every $value in $distValues satisfies $value eq fn:true()
  };
@@ -114,7 +114,7 @@ declare function excel-logical:or
   let $distValues := distinct-values($values)
   return
   if(fn:empty($distValues)) then
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Value"), "Provided sequence is empty", $values)
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Value"), "Provided sequence is empty", $values)
   else
     some $value in $distValues satisfies $value eq fn:true()
  };

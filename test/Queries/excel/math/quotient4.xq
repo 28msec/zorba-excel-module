@@ -1,5 +1,5 @@
 import module namespace
-excel="http://www.zorba-xquery.com/modules/excel/math";
+excel="http://zorba.io/modules/excel/math";
 
 excel:quotient(1,0)
 

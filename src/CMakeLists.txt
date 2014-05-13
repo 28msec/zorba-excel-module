@@ -12,8 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# all external module libraries are generated in the directory
-# of the corresponding .xq file
-MESSAGE(STATUS "Add com")
-ADD_SUBDIRECTORY(com)
-MESSAGE(STATUS "End modules")
+DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/excel/datetime" VERSION 1.0 FILE "datetime.xq")
+DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/excel/engineering" VERSION 1.0 FILE "engineering.xq")
+DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/excel/information" VERSION 1.0 FILE "information.xq")
+DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/excel/logical" VERSION 1.0 FILE "logical.xq")
+DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/excel/lookup" VERSION 1.0 FILE "lookup.xq")
+DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/excel/math-sumproduct" VERSION 1.0 FILE "math-sumproduct.xq")
+DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/excel/math" VERSION 1.0 FILE "math.xq")
+DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/excel/statistical-zorba" VERSION 1.0 FILE "statistical-zorba.xq")
+DECLARE_ZORBA_MODULE (URI "http://zorba.io/modules/excel/statistical" VERSION 1.0 FILE "statistical.xq")
+DECLARE_ZORBA_MODULE(URI "http://zorba.io/modules/excel/text" VERSION 1.0 FILE "text.xq")

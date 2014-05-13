@@ -1,4 +1,4 @@
 import module namespace
-excel-engineering = "http://www.zorba-xquery.com/modules/excel/engineering";
+excel-engineering = "http://zorba.io/modules/excel/engineering";
 
 excel-engineering:bin2dec("1111111111")  

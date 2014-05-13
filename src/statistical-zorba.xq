@@ -25,22 +25,22 @@ xquery version "3.0";
  : @See  http://office.microsoft.com/en-us/excel/CH062528311033.aspx
  : @project Zorba/Excel/Statistical Zorba
 :)
-module namespace  excel = "http://www.zorba-xquery.com/modules/excel/statistical-zorba" ;
+module namespace  excel = "http://zorba.io/modules/excel/statistical-zorba" ;
 
 import module namespace
-excel-math="http://www.zorba-xquery.com/modules/excel/math";
+excel-math="http://zorba.io/modules/excel/math";
 
 import module namespace
-excel-statistical="http://www.zorba-xquery.com/modules/excel/statistical";
+excel-statistical="http://zorba.io/modules/excel/statistical";
 
-declare namespace excel-err = "http://www.zorba-xquery.com/modules/excel/errors";
+declare namespace excel-err = "http://zorba.io/modules/excel/errors";
 
 (:~
  : W3C Math namespace URI.
 :)
 declare namespace math="http://www.w3.org/2005/xpath-functions/math";
 
-declare namespace ver = "http://www.zorba-xquery.com/options/versioning";
+declare namespace ver = "http://zorba.io/options/versioning";
 declare option ver:module-version "1.0";
 
 
@@ -140,7 +140,7 @@ declare function excel:stdevpa($numbers as xs:anyAtomicType+) as xs:anyAtomicTyp
  :       <dt>10 or 110</dt> <dd> VAR</dd>
  :       <dt>11 or 111</dt> <dd> VARP</dd></dl>
  :       
- :       In this implementation there is no difference between x and 10x.<br/>
+ :       In this implementation there is no difference between x and 10x.<p/>
  : @param $numbers the sequence of numbers or values castable to numeric.
  :     The sequence can be of any length.
  : @return The function result, as numeric type
@@ -193,5 +193,5 @@ declare function excel:subtotal($function_num as xs:integer, $numbers as xs:anyA
   if ($function_num = 11 or $function_num = 111) then
     excel-statistical:varp($numbers)
   else
-    fn:error(fn:QName("http://www.zorba-xquery.com/modules/excel/errors", "excel-err:Num"), "Subtotal function: function_num should be between 1 and 11 or 101 and 111")
+    fn:error(fn:QName("http://zorba.io/modules/excel/errors", "excel-err:Num"), "Subtotal function: function_num should be between 1 and 11 or 101 and 111")
 };
