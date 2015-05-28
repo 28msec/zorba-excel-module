@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+MESSAGE(STATUS "")
+MESSAGE(STATUS "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+MESSAGE(STATUS "Configuring external module <excel>")
+MESSAGE(STATUS "-------------------------------------------------------------")
+MESSAGE(STATUS "")
+
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 PROJECT (zorba_excel_module)
@@ -35,4 +41,7 @@ ENDIF(NOT ZORBA_WITH_BIG_INTEGER)
 
 DONE_DECLARING_ZORBA_URIS()
 
-# vim:set et sw=2 ts=2:
+MESSAGE(STATUS "")
+MESSAGE(STATUS "-------------------------------------------------------------")
+MESSAGE(STATUS "Configuration SUCCEEDED for external module <excel>")
+MESSAGE(STATUS "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
